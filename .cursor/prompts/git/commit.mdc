@@ -1,0 +1,330 @@
+---
+name: "commit"
+description: "Smart commit execution for documentation changes"
+author: "@oakensoul"
+tags: ["git", "commit", "documentation", "declarative"]
+context_files: ["../workflow-rules.yml", "../ai-guidance.llms"]
+---
+
+# Smart Commit Executor
+
+Execute commits intelligently based on current changes and project context.
+
+## Command Format
+- `@commit` - Auto-analyze and commit current changes
+- `@commit "description"` - Commit with custom description
+- `@commit --amend` - Amend last commit with current changes
+- `@commit --staged` - Commit only staged changes, ignore unstaged
+- `@commit --all` - Include all unstaged changes without asking
+- `@commit --split` - Force split into multiple atomic commits
+- `@commit --no-doc-check` - Skip documentation impact analysis
+- `@commit --update-context` - Force context update before committing
+
+## Execution Logic
+
+1. **Analyze Git Status**:
+   - Check `git status` for staged vs unstaged changes
+   - Identify if changes should be split into multiple commits
+   - Assess change complexity and logical groupings
+   - Check for workflow-rules.yml modifications (offer context update)
+   - **Scan for documentation impact** (see Documentation Check section)
+
+2. **Handle Multiple Commit Scenarios**:
+   - **Mixed Changes**: If changes span multiple logical areas, suggest splitting
+   - **Staged vs Unstaged**: If unstaged changes exist, ask for confirmation
+   - **Large Changesets**: Recommend atomic commits for better history
+
+3. **User Confirmation Flow**:
+   ```
+   Documentation Check (if not --no-doc-check):
+   → Analyze changes for documentation impact
+   → If high/medium priority triggers found: Ask "📚 Update docs first? (u/r/s/c)"
+   
+   If unstaged changes present AND user hasn't explicitly requested them:
+   → Ask: "Include unstaged changes? (y/n/review)"
+   
+   If changes should be split:
+   → Suggest: "These changes could be split into X commits. Proceed with single commit? (y/n/split)"
+   
+   If continuing with split:
+   → Guide through interactive staging for each logical commit
+   ```
+
+4. **Generate Commit Message(s)**:
+   ```
+   {type}({scope}): {description}
+   
+   type: docs, fix, feat, update (based on change analysis)
+   scope: onboarding, team, architecture, etc. (from file paths)
+   description: clear, concise description of what changed
+   ```
+
+5. **Execute with Validation**:
+   - Stage appropriate files (if not already staged)
+   - Run pre-commit checks
+   - Create commit(s) with generated message(s)
+   - Report status and next steps
+
+## Auto-Detection Rules
+
+### Split Commit Detection
+```
+Suggest splitting when:
+- Changes span 3+ different scopes (e.g., onboarding + team + architecture)
+- Mix of new files + content updates
+- Documentation changes + configuration changes
+- Bug fixes mixed with feature additions
+- Large files (>100 lines changed) + small files
+
+Single commit when:
+- All changes relate to same logical feature/task
+- Incremental updates to same document/area
+- Related fixes across same scope
+- Renaming/reorganization within scope
+```
+
+### File Path → Scope Mapping
+```
+onboarding/ → onboarding
+team/ → team  
+architecture/ → architecture
+stakeholders/ → stakeholders
+analytics/ → analytics
+operations/ → operations
+standards/ → standards
+README.md → readme
+.cursor/ → tooling
+```
+
+### Change Type → Commit Type
+```
+New files → feat
+Bug fixes, typos → fix
+Content updates → docs
+Process changes → update
+```
+
+## Documentation Impact Check
+
+### Trigger Conditions
+```
+Check for documentation updates when changes involve:
+
+High Priority (Always Ask):
+- New team members added (team/members/)
+- New processes or workflows (development/, operations/)
+- Architecture changes (architecture/)
+- New tools or stack changes (.cursor/, config files)
+- Onboarding process changes (onboarding/)
+
+Medium Priority (Ask if Significant):
+- Business context updates (business/, stakeholders/)
+- Analytics standards changes (analytics/)
+- Repository structure changes (new directories, major reorganization)
+
+Low Priority (Optional Check):
+- Minor content updates within existing docs
+- Typo fixes and small clarifications
+- README updates that are self-contained
+```
+
+### Documentation Check Flow
+```
+1. Analyze changed files against trigger conditions
+2. If triggers found, check related documentation files for staleness
+3. Prompt user with specific suggestions:
+
+"📚 DOCUMENTATION CHECK
+Your changes may impact documentation:
+
+✅ Changes detected:
+- New team member added (team/members/john-doe.md)
+- Onboarding process updated (onboarding/first-day-setup.md)
+
+🔍 Suggested documentation updates:
+- team/README.md (team roster may need updating)
+- onboarding/README.md (process flow references)
+- README.md (main onboarding links)
+
+📝 Actions:
+[u] Update suggested docs now
+[r] Review suggestions and decide
+[s] Skip - commit anyway
+[c] Cancel commit to update manually
+
+Choice: "
+```
+
+### Auto-Detection Patterns
+```
+New Team Member → Check:
+- team/README.md (roster, contact info)
+- team/structure.md (org chart, reporting)
+- onboarding/README.md (buddy assignments)
+
+Process Changes → Check:
+- README.md (main workflow references)
+- Related process docs in same area
+- Cross-references in other areas
+
+Tool/Stack Changes → Check:
+- architecture/data-stack.md
+- development/README.md (setup instructions)
+- onboarding/laptop-setup.md (installation steps)
+
+Onboarding Changes → Check:
+- README.md (week 1 roadmap)
+- manager-onboarding-checklist.md
+- Cross-references in development/
+
+Directory Structure Changes → Check:
+- README.md (navigation, structure overview)
+- Related area README files
+- .cursor/context files
+```
+
+### Documentation Update Assistance
+```
+If user chooses to update docs:
+
+1. Identify specific files needing updates
+2. Open files and highlight sections to review
+3. Suggest specific changes based on commit content
+4. Offer to stage documentation updates with main commit
+5. Continue with original commit process
+
+Example Suggestions:
+"📝 Updating team/README.md:
+- Line 23: Add John Doe to Data Engineers list
+- Line 67: Update team size from 3 to 4 members
+- Line 89: Add John's Slack handle to contact section"
+```
+
+## Output Format
+
+### Single Commit
+```
+✅ COMMITTED: docs(architecture): update Snowflake configuration details
+📁 Files: architecture/data-stack.md
+🎯 Type: Documentation update (direct to main appropriate)
+📋 Next: Ready to push (@push or @git-workflow push)
+```
+
+### Multiple Commits
+```
+✅ COMMITTED (1/3): docs(onboarding): update README with new process
+📁 Files: onboarding/README.md
+✅ COMMITTED (2/3): docs(team): clarify team structure and roles
+📁 Files: team/structure.md
+✅ COMMITTED (3/3): docs(tooling): improve commit prompt logic
+📁 Files: .cursor/prompts/git/commit.mdc
+🎯 Summary: 3 commits created for logical separation
+📋 Next: Ready to push (@push or @git-workflow push)
+```
+
+### Staged Only Commit
+```
+✅ COMMITTED: docs(onboarding): add first-day setup tasks
+📁 Files: onboarding/first-day-setup.md (staged changes only)
+⚠️  Unstaged: README.md still has uncommitted changes
+📋 Next: Review unstaged changes or push current commit
+```
+
+### With Documentation Updates
+```
+📚 DOCUMENTATION UPDATED: 2 files updated based on changes
+📝 Updated: team/README.md (added new team member)
+📝 Updated: README.md (updated team size reference)
+✅ COMMITTED: feat(team): add Jane Smith as Senior Data Engineer
+📁 Files: team/members/jane-smith.md, team/README.md, README.md
+🎯 Type: New team member with documentation sync
+📋 Next: Ready to push (@push or @git-workflow push)
+```
+
+### Documentation Check Skipped
+```
+📚 DOCUMENTATION CHECK SKIPPED (--no-doc-check flag used)
+✅ COMMITTED: docs(team): fix typo in team member bio
+📁 Files: team/members/jane-smith.md
+⚠️  Note: Documentation consistency not verified
+📋 Next: Ready to push (@push or @git-workflow push)
+```
+
+## Examples
+
+### Simple Content Update
+```bash
+# Modified: team/structure.md (role clarifications)
+# Execute: @commit
+# Result: docs(team): clarify role definitions and responsibilities
+```
+
+### Multiple File Changes (Same Scope)
+```bash
+# Modified: onboarding/README.md, onboarding/setup.md
+# Execute: @commit "improve setup instructions"
+# Result: docs(onboarding): improve setup instructions and add troubleshooting
+```
+
+### Mixed Scope Changes (Split Recommended)
+```bash
+# Staged: onboarding/README.md
+# Unstaged: team/structure.md, .cursor/prompts/git/commit.mdc
+# Execute: @commit
+# Prompt: "Include unstaged changes? (y/n/review)"
+# If 'y': "These changes span 3 scopes. Split into separate commits? (y/n/split)"
+```
+
+### Staged vs Unstaged Handling
+```bash
+# Staged: onboarding/first-day-setup.md
+# Unstaged: README.md
+# Execute: @commit
+# Prompt: "Unstaged changes detected. Include unstaged changes? (y/n/review)"
+# Options: y=include all, n=staged only, review=show unstaged first
+```
+
+### Forced Split Example
+```bash
+# Modified: onboarding/README.md, team/structure.md, architecture/data-stack.md
+# Execute: @commit --split
+# Result: 
+#   Commit 1: docs(onboarding): update README with new process
+#   Commit 2: docs(team): clarify team structure and roles  
+#   Commit 3: docs(architecture): update data stack configuration
+```
+
+### Documentation Check Example
+```bash
+# Modified: team/members/jane-smith.md (new team member)
+# Execute: @commit
+# Prompt: "📚 DOCUMENTATION CHECK
+#          New team member detected. Update team roster? (u/r/s/c)"
+# If 'u': Opens team/README.md with suggested changes
+# If 'r': Shows specific files and line numbers to review
+# If 's': Proceeds with commit as-is
+# If 'c': Cancels commit for manual updates
+```
+
+### Process Change with Doc Impact
+```bash
+# Modified: onboarding/first-day-setup.md (new app setup task)
+# Execute: @commit
+# Analysis: "Process change detected in onboarding"
+# Suggestions: "Consider updating README.md week 1 roadmap"
+# Prompt: "📚 Update documentation first? (u/r/s/c)"
+```
+
+### Skip Documentation Check
+```bash
+# Modified: team/members/jane-smith.md (typo fix)
+# Execute: @commit --no-doc-check
+# Result: docs(team): fix typo in Jane Smith's bio (no doc check performed)
+```
+
+### Fix Scenario
+```bash
+# Modified: stakeholders/README.md (broken links)
+# Execute: @commit
+# Result: fix(stakeholders): repair broken internal links and references
+```

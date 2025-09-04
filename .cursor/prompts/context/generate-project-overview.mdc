@@ -1,0 +1,124 @@
+---
+name: "generate-project-overview"
+description: "Generate project-overview.llms from workflow-rules.yml"
+author: "@oakensoul"
+tags: ["context", "project", "overview", "generation"]
+context_files: ["../../workflow-rules.yml"]
+---
+
+# Project Overview Context Generator
+
+Generate comprehensive `project-overview.llms` file from current `workflow-rules.yml` configuration.
+
+## 🎯 **Purpose**
+
+Create LLM context that helps AI instantly understand:
+- **What this project is** - type, purpose, scope, business value
+- **Who uses it** - target audience, stakeholders, team members
+- **How it's organized** - structure, content patterns, navigation
+- **Why it matters** - business impact, team value, success metrics
+
+## 📋 **Content Structure**
+
+### **Project Identity Section**
+Extract from workflow-rules.yml:
+- Project name, type (documentation/pipeline/api/etc.)
+- Team name, company, primary purpose
+- Target audience and user personas
+- Business goals and success criteria
+
+### **Repository Structure Section**
+Analyze current directory structure and explain:
+- Key directories and their purposes (/onboarding, /development, /architecture, etc.)
+- Content organization philosophy (progressive complexity, audience-based, etc.)
+- Navigation patterns and cross-references
+- File naming conventions and content standards
+
+### **Usage Patterns Section**
+Describe how this repository is used:
+- Daily workflow patterns (how team members interact)
+- Update cycles (how often content changes, who updates it)
+- Integration points (how this connects to other systems)
+- Collaboration methods (how multiple people contribute)
+
+### **Content Philosophy Section**
+Explain the approach to documentation:
+- Writing style and tone (professional helpful, action-oriented)
+- Complexity approach (start simple, add depth progressively)
+- Example preference (practical over theoretical)
+- Audience assumptions (day-one new hire vs experienced)
+
+### **Business Context Section**
+Connect technical work to business value:
+- How this repository supports business goals
+- Stakeholder impact and dependency relationships
+- Success metrics and quality indicators
+- Team productivity and efficiency gains
+
+## 🧠 **LLM Optimization Guidelines**
+
+### **Write for AI Consumption**
+- **Natural language** - avoid overly structured formats
+- **Context-rich** - include background that helps AI understand nuance
+- **Example-heavy** - concrete scenarios better than abstract principles
+- **Decision-focused** - help AI make better suggestions and choices
+
+### **Information Architecture**
+- **Hierarchical** - general to specific information flow
+- **Cross-referenced** - connect related concepts clearly
+- **Actionable** - include guidance on how to use this information
+- **Validated** - ensure accuracy with current project state
+
+## 📄 **Expected Output**
+
+Generate a complete `project-overview.llms` file with this structure:
+
+```markdown
+# Project Overview: [Project Name]
+
+## Auto-Generated Context
+**Source**: workflow-rules.yml
+**Generated**: [current timestamp]
+**Purpose**: Comprehensive project context for LLM understanding
+
+## Project Identity
+[Project type, team, company, purpose extracted from workflow-rules.yml]
+
+## Target Audience
+[Who uses this repository and how they interact with it]
+
+## Repository Organization
+[Directory structure, content patterns, navigation philosophy]
+
+## Content Standards
+[Writing approach, quality standards, maintenance patterns]
+
+## Business Impact
+[How this work connects to business goals and stakeholder value]
+
+## Usage Guidance for AI
+[How LLMs should use this context to make better decisions]
+
+## Common Scenarios
+[Examples of typical tasks and how to approach them]
+```
+
+## 🔍 **Quality Standards**
+
+Ensure the generated content:
+- [ ] **Accurately reflects** current workflow-rules.yml configuration
+- [ ] **Serves the stated purpose** and target audience from workflow-rules.yml
+- [ ] **Provides sufficient context** for AI to understand project purpose
+- [ ] **Includes practical examples** from actual project scenarios
+- [ ] **Connects technical work** to business value and impact
+- [ ] **Uses consistent terminology** with other project documentation
+- [ ] **Optimizes for LLM consumption** rather than human documentation
+
+## 🚀 **Execution**
+
+1. **Read workflow-rules.yml** - extract project configuration and context
+2. **Analyze repository structure** - understand current organization
+3. **Generate project-overview.llms** - following the specified structure
+4. **Validate accuracy** - ensure content matches current project state
+
+Generate the complete project overview context file now.

@@ -1,0 +1,265 @@
+---
+name: "hotfix"
+description: "Create hotfix branch for urgent documentation fixes"
+author: "@oakensoul"
+tags: ["git", "hotfix", "urgent", "documentation", "declarative"]
+context_files: ["../workflow-rules.yml", "../ai-guidance.llms"]
+---
+
+# Hotfix Branch Creator
+
+Create hotfix branches for urgent documentation fixes that require immediate attention.
+
+## Command Format
+- `@hotfix "JIRA-123"` - Create hotfix from main for ticket
+- `@hotfix "GH-456" abc1234` - Create hotfix from specific commit
+- `@hotfix "broken-links"` - Create hotfix with descriptive name
+- `@hotfix "urgent-contact-update" --base production` - Create from specific base branch
+
+## When to Use Hotfixes
+
+### Documentation Hotfix Scenarios
+```yaml
+Critical (Immediate):
+  - Broken links blocking stakeholder work
+  - Incorrect security contact information
+  - Compliance documentation errors affecting audits
+  - Onboarding documentation preventing new hire productivity
+
+High Priority:
+  - Business-critical information affecting current decisions
+  - Stakeholder contact info preventing urgent communication
+  - Process documentation blocking operational workflows
+
+Medium Priority:
+  - Important documentation improvements (use regular workflow instead)
+  - Content enhancements (use feature branch workflow)
+  - Non-urgent fixes (use regular docs/fix branch)
+```
+
+## Execution Logic
+
+### 1. Issue ID Parsing
+```yaml
+# Detect issue tracking system
+JIRA-123 → Extract JIRA ticket number
+GH-456 → Extract GitHub issue number  
+TICKET-789 → Generic ticket system
+"descriptive-name" → No ticket system, use description
+```
+
+### 2. Base Commit Determination
+```yaml
+# Default: Latest main branch
+No commit specified → git checkout -b hotfix/NAME origin/main
+
+# Specific commit: Use provided hash
+abc1234 provided → git checkout -b hotfix/NAME abc1234
+
+# Specific base branch
+--base production → git checkout -b hotfix/NAME origin/production
+```
+
+### 3. Branch Naming Convention
+```yaml
+# Ticket-based naming
+JIRA-123 → hotfix/JIRA-123-urgent-fix
+GH-456 → hotfix/GH-456-critical-issue
+SUPPORT-789 → hotfix/SUPPORT-789-emergency-fix
+
+# Descriptive naming
+"broken-links" → hotfix/broken-links
+"contact-update" → hotfix/contact-update
+"security-fix" → hotfix/security-fix
+```
+
+### 4. Environment Setup
+```bash
+# Create and switch to hotfix branch
+git fetch origin
+git checkout -b hotfix/{name} {base-commit}
+git push -u origin hotfix/{name}
+
+# Provide next steps guidance
+# Set up for fast-track workflow
+```
+
+## Output Format
+
+### Successful Hotfix Creation
+```
+🚨 HOTFIX CREATED: hotfix/JIRA-456-urgent-fix
+📋 Issue: JIRA-456 (stakeholder dashboard links broken)
+🎯 Base: main (latest: abc1234 - "docs(stakeholders): update contact information")  
+🌿 Branch: hotfix/JIRA-456-urgent-fix
+🔗 Remote: origin/hotfix/JIRA-456-urgent-fix (tracking set)
+
+⚡ URGENCY DETECTED: Stakeholder-blocking issue
+📋 Next Steps:
+   1. Implement urgent fix for broken dashboard links
+   2. Test all affected links thoroughly  
+   3. Use '@shipit --direct' for immediate deployment
+   4. Notify stakeholders when fix is live
+
+🎯 Fast-Track Process:
+   - Skip normal PR review for immediate deployment
+   - Create follow-up PR for documentation of fix
+   - Ensure team is notified of emergency change
+```
+
+### Hotfix from Specific Commit
+```
+🚨 HOTFIX CREATED: hotfix/GH-789-critical-issue  
+📋 Issue: GH-789 (incorrect onboarding setup instructions)
+🎯 Base: def5678 (before problematic changes)
+🌿 Branch: hotfix/GH-789-critical-issue
+🔗 Remote: origin/hotfix/GH-789-critical-issue (tracking set)
+
+⚡ SPECIFIC COMMIT BASE: def5678
+📝 Commit: "docs(onboarding): add troubleshooting section"
+📋 Rationale: Creating fix from before issue was introduced
+
+📋 Next Steps:
+   1. Apply targeted fix for setup instructions
+   2. Verify fix works from this baseline
+   3. Test with affected new hires if possible
+   4. Use '@shipit' to create reviewed PR (not --direct due to complexity)
+```
+
+### Descriptive Hotfix (No Ticket)
+```
+🚨 HOTFIX CREATED: hotfix/security-contact-update
+📋 Issue: Security contact information outdated
+🎯 Base: main (latest: ghi9012)
+🌿 Branch: hotfix/security-contact-update  
+🔗 Remote: origin/hotfix/security-contact-update (tracking set)
+
+⚡ SECURITY RELATED: High priority update required
+📋 Context: Emergency contact info needs immediate correction
+
+📋 Next Steps:
+   1. Update all security contact references
+   2. Verify contact information accuracy
+   3. Use '@shipit --direct' for immediate update
+   4. Notify security team of documentation update
+```
+
+## Integration with Workflow Commands
+
+### Complete Hotfix Workflow
+```bash
+# 1. Create hotfix branch
+@hotfix "JIRA-123"
+
+# 2. Make urgent fixes...
+# 3. Deploy immediately (for critical issues)
+@shipit --direct "fix critical stakeholder blocking links"
+
+# OR create PR for complex fixes
+@shipit "fix complex onboarding issue requiring review"
+```
+
+### Hotfix + Review Process
+```bash
+# For complex hotfixes that benefit from review
+@hotfix "complex-compliance-fix"
+# Make changes...
+@shipit  # → Creates PR with hotfix reviewers (manager + senior engineer)
+```
+
+## Context Integration
+
+### From project-context.yml
+```yaml
+# Hotfix criteria and urgency levels
+hotfix_process:
+  urgency_levels:
+    critical: stakeholder_blocking, security_related
+    high: business_critical_information_errors
+    medium: process_blocking_documentation_issues
+  
+  fast_track_criteria:
+    - broken_links_affecting_operations
+    - incorrect_contact_information  
+    - security_related_updates
+    - compliance_documentation_errors
+```
+
+### From context.llms
+```markdown
+# Business impact assessment
+- Consider stakeholder communication - hotfix implies urgency
+- Use for immediate business impact requiring same-day resolution
+- Balance speed with quality - still validate critical fixes
+- Communicate hotfix deployment to affected teams
+```
+
+## Error Handling
+
+### Invalid Issue ID Format
+```
+❌ HOTFIX FAILED: Invalid issue ID format
+🚫 Issue: "jira123" doesn't match expected patterns
+💡 Suggestion: Use format like "JIRA-123" or "GH-456"
+📋 Alternative: Use descriptive name like "broken-dashboard-links"
+```
+
+### Base Commit Not Found
+```
+❌ HOTFIX FAILED: Base commit not found
+🚫 Issue: Commit "xyz789" does not exist
+🔧 Resolution: Use 'git log --oneline' to find valid commit hash
+📋 Alternative: Omit commit hash to use latest main
+```
+
+### Branch Already Exists
+```
+⚠️  HOTFIX WARNING: Branch already exists
+🔗 Existing: hotfix/JIRA-456-urgent-fix
+💡 Options:
+   - Use different name: @hotfix "JIRA-456-v2"
+   - Switch to existing: git checkout hotfix/JIRA-456-urgent-fix
+   - Delete existing: git branch -D hotfix/JIRA-456-urgent-fix
+```
+
+## Examples
+
+### Scenario 1: Stakeholder Report Broken Links
+```bash
+# Stakeholder reports: "Can't access team contact info from onboarding docs"
+@hotfix "broken-team-links"
+
+# Output: Creates hotfix/broken-team-links from main
+# Fix links in onboarding documentation
+@shipit --direct "fix broken team contact links blocking stakeholder access"
+```
+
+### Scenario 2: JIRA Ticket for Security Update
+```bash
+# JIRA ticket: Emergency security contact information update
+@hotfix "JIRA-789"
+
+# Output: Creates hotfix/JIRA-789-urgent-fix from main  
+# Update security contacts across documentation
+@shipit --direct "update emergency security contacts per JIRA-789"
+```
+
+### Scenario 3: GitHub Issue with Regression
+```bash
+# GitHub issue: Recent change broke onboarding, need to fix from before change
+@hotfix "GH-456" abc1234
+
+# Output: Creates hotfix/GH-456-critical-issue from commit abc1234
+# Apply targeted fix without recent problematic changes
+@shipit "fix onboarding regression introduced in recent updates"
+```
+
+### Scenario 4: Complex Compliance Fix
+```bash
+# Complex compliance documentation requiring careful review
+@hotfix "compliance-audit-fixes"
+
+# Output: Creates hotfix branch but suggests review process
+# Make comprehensive compliance updates
+@shipit  # → Creates PR with hotfix reviewers for thorough review
+```

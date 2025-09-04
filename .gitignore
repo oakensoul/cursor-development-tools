@@ -1,0 +1,202 @@
+# Cursor Development Tools - .gitignore
+
+# === Project-Specific ===
+.vault
+.vault/
+
+# === Operating System ===
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# === Development Tools ===
+# IDEs and Editors (excluding our .cursor directory)
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Cursor IDE temporary files
+.cursor-backup-*/          # Backup folders created by our update script
+*.cursor-chat
+*.cursor-logs
+
+# === Programming Languages ===
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+.pnpm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Ruby
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+.bundle/
+vendor/bundle
+lib/bundler/man/
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# === Version Control ===
+# Git
+*.orig
+*.rej
+
+# === Logs ===
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# === Runtime ===
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# === Coverage ===
+lib-cov/
+coverage/
+.nyc_output/
+.coverage
+.pytest_cache/
+htmlcov/
+
+# === Environment ===
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# === Temporary Files ===
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+
+# === Backup Files ===
+*.bak
+*.backup
+*~
+
+# === Archives ===
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# === Security ===
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+
+# === Database ===
+*.db
+*.sqlite
+*.sqlite3
+
+# IMPORTANT: Keep our .cursor directory
+# This contains our core prompts, rules, and templates
+!.cursor/

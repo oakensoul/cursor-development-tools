@@ -1,0 +1,386 @@
+---
+name: "branch-protection"
+description: "Set up comprehensive branch protection rules for repository"
+author: "@oakensoul"
+tags: ["git", "security", "workflow", "branch-protection", "github"]
+context_files: ["../../workflow-rules.yml"]
+---
+
+# Branch Protection Setup
+
+Configure comprehensive branch protection rules for a repository to enforce workflow standards and prevent direct commits to protected branches.
+
+## Command Format
+- `@branch-protection` - Set up standard protection for main branch
+- `@branch-protection --branch develop` - Protect specific branch
+- `@branch-protection --strict` - Maximum security settings
+- `@branch-protection --minimal` - Basic protection only
+- `@branch-protection --check` - Verify current protection status
+
+## Pre-Execution Authentication Check
+
+### **GitHub CLI Authentication Verification**
+```bash
+# CRITICAL: Always verify gh auth before proceeding
+gh auth status 2>/dev/null || {
+    echo "❌ AUTHENTICATION REQUIRED"
+    echo ""
+    echo "GitHub CLI is not authenticated. Please run:"
+    echo "  gh auth login"
+    echo ""
+    echo "Then retry this command."
+    exit 1
+}
+```
+
+### **Repository Access Verification**
+```bash
+# Verify admin access to repository
+gh api repos/{owner}/{repo} --jq '.permissions.admin' | grep -q true || {
+    echo "❌ INSUFFICIENT PERMISSIONS"
+    echo ""
+    echo "Admin access required to configure branch protection."
+    echo "Contact repository administrator or organization owner."
+    exit 1
+}
+```
+
+## Protection Rule Templates
+
+### **Standard Protection (Default)**
+Based on workflow-rules.yml requirements:
+```json
+{
+  "required_status_checks": {
+    "strict": true,
+    "contexts": []
+  },
+  "enforce_admins": false,
+  "required_pull_request_reviews": {
+    "required_approving_review_count": 1,
+    "dismiss_stale_reviews": true,
+    "require_code_owner_reviews": false,
+    "require_last_push_approval": false
+  },
+  "restrictions": null,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "block_creations": false,
+  "required_conversation_resolution": true
+}
+```
+
+### **Strict Protection (High Security)**
+For production or critical repositories:
+```json
+{
+  "required_status_checks": {
+    "strict": true,
+    "contexts": ["ci", "security-scan", "tests"]
+  },
+  "enforce_admins": true,
+  "required_pull_request_reviews": {
+    "required_approving_review_count": 2,
+    "dismiss_stale_reviews": true,
+    "require_code_owner_reviews": true,
+    "require_last_push_approval": true
+  },
+  "restrictions": {
+    "users": [],
+    "teams": ["admin-team"],
+    "apps": []
+  },
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "block_creations": false,
+  "required_conversation_resolution": true,
+  "required_linear_history": true
+}
+```
+
+### **Minimal Protection (Development)**
+For development or experimental repositories:
+```json
+{
+  "required_status_checks": {
+    "strict": false,
+    "contexts": []
+  },
+  "enforce_admins": false,
+  "required_pull_request_reviews": {
+    "required_approving_review_count": 1,
+    "dismiss_stale_reviews": false,
+    "require_code_owner_reviews": false,
+    "require_last_push_approval": false
+  },
+  "restrictions": null,
+  "allow_force_pushes": false,
+  "allow_deletions": false,
+  "block_creations": false,
+  "required_conversation_resolution": false
+}
+```
+
+## Implementation Process
+
+### **1. Environment Detection**
+```bash
+# Detect repository information
+REPO_OWNER=$(gh repo view --json owner --jq '.owner.login')
+REPO_NAME=$(gh repo view --json name --jq '.name')
+BRANCH_NAME=${1:-main}  # Default to main, allow override
+
+echo "🔧 Configuring protection for:"
+echo "   Repository: $REPO_OWNER/$REPO_NAME"
+echo "   Branch: $BRANCH_NAME"
+echo ""
+```
+
+### **2. Current Status Check**
+```bash
+# Check existing protection status
+echo "📋 Current protection status:"
+gh api "repos/$REPO_OWNER/$REPO_NAME/branches/$BRANCH_NAME/protection" \
+    --jq '{
+        required_reviews: .required_pull_request_reviews.required_approving_review_count,
+        status_checks: .required_status_checks.strict,
+        admin_enforcement: .enforce_admins.enabled,
+        force_push_blocked: (.allow_force_pushes.enabled | not),
+        deletion_blocked: (.allow_deletions.enabled | not)
+    }' 2>/dev/null || echo "   No protection currently configured"
+echo ""
+```
+
+### **3. Protection Application**
+```bash
+# Apply branch protection rules
+echo "🛡️  Applying branch protection rules..."
+
+gh api "repos/$REPO_OWNER/$REPO_NAME/branches/$BRANCH_NAME/protection" \
+    --method PUT \
+    --input protection-config.json && {
+    
+    echo "✅ SUCCESS: Branch protection configured"
+    echo ""
+    echo "🔒 Protection Summary:"
+    echo "   ✅ Pull request reviews required"
+    echo "   ✅ Status checks must pass"
+    echo "   ✅ Branch must be up to date"
+    echo "   ✅ Force pushes blocked"
+    echo "   ✅ Branch deletions blocked"
+    echo "   ✅ Conversation resolution required"
+    echo ""
+    
+} || {
+    echo "❌ FAILED: Could not configure branch protection"
+    echo ""
+    echo "Common issues:"
+    echo "   • Insufficient repository permissions"
+    echo "   • Branch does not exist"
+    echo "   • Invalid protection configuration"
+    echo "   • Network connectivity issues"
+    exit 1
+}
+```
+
+### **4. Verification**
+```bash
+# Verify protection was applied correctly
+echo "🔍 Verifying protection configuration..."
+
+gh api "repos/$REPO_OWNER/$REPO_NAME/branches/$BRANCH_NAME/protection" \
+    --jq '{
+        reviews_required: .required_pull_request_reviews.required_approving_review_count,
+        dismiss_stale: .required_pull_request_reviews.dismiss_stale_reviews,
+        strict_status: .required_status_checks.strict,
+        conversation_resolution: .required_conversation_resolution.enabled,
+        force_push_protection: (.allow_force_pushes.enabled | not),
+        deletion_protection: (.allow_deletions.enabled | not)
+    }' && {
+    
+    echo ""
+    echo "✅ VERIFICATION: Protection rules successfully applied"
+    
+} || {
+    echo "⚠️  WARNING: Could not verify protection configuration"
+}
+```
+
+## Usage Examples
+
+### **Standard Setup for Main Branch**
+```bash
+@branch-protection
+# Sets up standard protection for main branch with workflow-rules.yml requirements
+```
+
+### **Protect Development Branch**
+```bash
+@branch-protection --branch develop
+# Applies same protection rules to develop branch
+```
+
+### **Maximum Security Setup**
+```bash
+@branch-protection --strict
+# Applies strictest security settings for production repositories
+```
+
+### **Check Current Protection Status**
+```bash
+@branch-protection --check
+# Displays current protection status without making changes
+```
+
+## Configuration Customization
+
+### **Status Check Integration**
+When CI/CD is configured, update the status check contexts:
+```json
+"required_status_checks": {
+  "strict": true,
+  "contexts": [
+    "continuous-integration",
+    "security-scan",
+    "unit-tests",
+    "integration-tests",
+    "documentation-build"
+  ]
+}
+```
+
+### **Team-Based Restrictions**
+For enterprise repositories with team-based access:
+```json
+"restrictions": {
+  "users": ["emergency-user"],
+  "teams": ["core-team", "admin-team"],
+  "apps": ["github-actions"]
+}
+```
+
+### **Code Owner Integration**
+When CODEOWNERS file exists:
+```json
+"required_pull_request_reviews": {
+  "required_approving_review_count": 1,
+  "require_code_owner_reviews": true,
+  "dismiss_stale_reviews": true
+}
+```
+
+## Troubleshooting
+
+### **Common Error Messages**
+
+#### **"Branch not found"**
+```bash
+# Verify branch exists
+gh api "repos/$REPO_OWNER/$REPO_NAME/branches" --jq '.[].name'
+
+# Create branch if needed
+git checkout -b main
+git push -u origin main
+```
+
+#### **"Insufficient permissions"**
+```bash
+# Check repository permissions
+gh api "repos/$REPO_OWNER/$REPO_NAME" --jq '.permissions'
+
+# Contact repository administrator for admin access
+```
+
+#### **"Validation failed"**
+```bash
+# Check protection configuration syntax
+echo "$PROTECTION_CONFIG" | jq '.'
+
+# Verify required fields are present
+```
+
+### **Recovery Procedures**
+
+#### **Remove Protection (Emergency)**
+```bash
+# EMERGENCY ONLY: Remove all protection
+gh api "repos/$REPO_OWNER/$REPO_NAME/branches/$BRANCH_NAME/protection" \
+    --method DELETE
+
+echo "⚠️  WARNING: Branch protection removed"
+echo "🔧 Re-apply protection immediately after emergency resolution"
+```
+
+#### **Update Protection Settings**
+```bash
+# Modify existing protection (same PUT endpoint)
+gh api "repos/$REPO_OWNER/$REPO_NAME/branches/$BRANCH_NAME/protection" \
+    --method PUT \
+    --input updated-protection.json
+```
+
+## Integration with Workflow
+
+### **Post-Setup Actions**
+After successful protection setup:
+1. **Document Configuration**: Update repository README with protection details
+2. **Team Notification**: Inform team members about new workflow requirements
+3. **CI/CD Integration**: Configure status checks if automated testing exists
+4. **Review Process**: Establish review assignment and approval procedures
+
+### **Workflow Rules Compliance**
+This prompt implements the protection requirements from workflow-rules.yml:
+- ✅ Require pull request reviews before merging
+- ✅ Require status checks to pass before merging  
+- ✅ Require branches to be up to date before merging
+- ✅ Block direct commits to protected branch
+- ✅ Enforce conversation resolution
+
+### **Monitoring and Maintenance**
+- **Regular Review**: Quarterly review of protection settings
+- **Access Audit**: Monitor who has admin access to modify protection
+- **Rule Updates**: Adjust protection as team and project mature
+- **Compliance Verification**: Ensure protection aligns with security policies
+
+## Security Considerations
+
+### **Administrator Enforcement**
+- **Development Repos**: `enforce_admins: false` (allows emergency access)
+- **Production Repos**: `enforce_admins: true` (maximum security)
+- **Partner Repos**: Based on partnership security requirements
+
+### **Access Control**
+- **Restriction Lists**: Limit who can push to protected branches
+- **Team Integration**: Use GitHub teams for scalable access management
+- **App Integration**: Allow GitHub Actions and approved apps
+
+### **Audit Trail**
+- **Protection Changes**: All modifications logged in repository audit log
+- **Access Monitoring**: Track who modifies protection settings
+- **Compliance Reporting**: Regular review of protection compliance
+
+---
+
+**Example Output:**
+```
+🔧 Configuring protection for:
+   Repository: BetterPool/partner-survivor-atlas
+   Branch: main
+
+📋 Current protection status:
+   No protection currently configured
+
+🛡️  Applying branch protection rules...
+✅ SUCCESS: Branch protection configured
+
+🔒 Protection Summary:
+   ✅ Pull request reviews required
+   ✅ Status checks must pass
+   ✅ Branch must be up to date
+   ✅ Force pushes blocked
+   ✅ Branch deletions blocked
+   ✅ Conversation resolution required
+
+🔍 Verifying protection configuration...
+✅ VERIFICATION: Protection rules successfully applied
+```

@@ -1,0 +1,268 @@
+---
+name: "update-workflow-rules"
+description: "Update existing workflow-rules.yml with new features or changes"
+author: "@oakensoul"
+tags: ["config", "update", "workflow-rules", "enhancement"]
+context_files: ["../../workflow-rules.yml"]
+---
+
+# Workflow Rules Updater
+
+Update existing `workflow-rules.yml` configuration to add new features, team changes, or project evolution.
+
+## 🎯 **Purpose**
+
+Intelligently update workflow-rules.yml for:
+- **New team members** - add roles, update team size, adjust collaboration patterns
+- **Technology additions** - new tools, platforms, integrations
+- **Process improvements** - refined workflows, new quality checks, better standards
+- **Project evolution** - scope changes, audience expansion, new requirements
+- **Feature additions** - new git scopes, commit types, reviewer categories
+
+## 📋 **Update Categories**
+
+### **Team Structure Updates**
+```yaml
+# Common team changes:
+team_growth:
+  - new_engineers: "Add team members, update size, adjust meeting patterns"
+  - role_changes: "Update responsibilities, expertise areas, review assignments"
+  - manager_changes: "Update leadership, escalation paths, approval workflows"
+
+team_process:
+  - meeting_changes: "Update cadence, format, or focus areas"
+  - communication_updates: "New channels, tools, or interaction patterns"
+  - collaboration_improvements: "Better review processes, pairing, knowledge sharing"
+```
+
+### **Technology Stack Updates**
+```yaml
+# Technology evolution:
+new_tools:
+  - development: "New IDEs, AI assistants, code quality tools"
+  - data_platform: "Additional databases, transformation tools, BI platforms"
+  - infrastructure: "Cloud services, monitoring, deployment tools"
+  - collaboration: "Project management, documentation, communication tools"
+
+integrations:
+  - api_additions: "New external services, data sources, integrations"
+  - workflow_tools: "CI/CD improvements, automation, testing frameworks"
+  - monitoring: "Observability, alerting, performance tracking tools"
+```
+
+### **Workflow Enhancements**
+```yaml
+# Process improvements:
+git_workflow:
+  - new_commit_types: "Additional commit categories for better organization"
+  - scope_additions: "New areas of work requiring separate scopes"
+  - branching_refinements: "Improved branch naming, workflow patterns"
+  - review_improvements: "Better reviewer assignment, quality gates"
+
+quality_standards:
+  - testing_requirements: "New test types, coverage requirements, validation"
+  - security_measures: "Security scanning, compliance checks, audit requirements"
+  - performance_standards: "Performance testing, optimization requirements"
+```
+
+## 🔄 **Update Patterns**
+
+### **Adding New Team Members**
+```yaml
+# Example update for team growth:
+current_state: "team_size: 5"
+update_to: "team_size: 6"
+
+additional_changes:
+  - meeting_patterns: "Update standup format for larger team"
+  - review_distribution: "Adjust reviewer pools for load balancing"
+  - expertise_areas: "Document new member's specialty areas"
+  - onboarding_updates: "Refresh onboarding for current team size"
+```
+
+### **New Technology Integration**
+```yaml
+# Example: Adding Redis to tech stack
+current_stack: ["snowflake", "dbt", "metabase", "airflow"]
+add_technology: "redis"
+updated_stack: ["snowflake", "dbt", "metabase", "airflow", "redis"]
+
+related_updates:
+  - commit_scopes: Add "cache" scope for Redis-related changes
+  - review_expertise: Add caching specialist to reviewer assignments
+  - documentation: Update architecture docs to include Redis usage
+  - quality_checks: Add Redis-specific testing and monitoring
+```
+
+### **Process Improvements**
+```yaml
+# Example: Enhanced code review process
+current_process: "basic peer review"
+improvement: "structured review with checklists"
+
+updates_needed:
+  - quality_checks: Add "review_checklist_completion"
+  - reviewer_assignment: Add "code_quality_specialist" role
+  - documentation: Update review standards and expectations
+  - tools: Add code review templates and automation
+```
+
+## 📊 **Interactive Update Process**
+
+### **Change Category Selection**
+```yaml
+update_types:
+  team_changes:
+    - "Team size or composition changes"
+    - "Role or responsibility updates"
+    - "Communication or meeting pattern changes"
+  
+  technology_changes:
+    - "New tools or platforms"
+    - "Integration additions"
+    - "Infrastructure or deployment changes"
+  
+  process_improvements:
+    - "Git workflow refinements"
+    - "Quality standard enhancements"
+    - "Review process improvements"
+  
+  project_evolution:
+    - "Scope or audience changes"
+    - "Business context updates"
+    - "Success criteria modifications"
+```
+
+### **Guided Update Questions**
+```yaml
+# Based on selected update type, ask relevant questions:
+team_changes:
+  - "What team changes have occurred? (new members/role changes/departures)"
+  - "How has this affected team dynamics or processes?"
+  - "Do meeting patterns or communication need adjustment?"
+  - "Are there new expertise areas or responsibilities?"
+
+technology_changes:
+  - "What new technologies are being added?"
+  - "How do they integrate with existing stack?"
+  - "Do they require new commit scopes or review expertise?"
+  - "Are there new quality or security requirements?"
+
+process_improvements:
+  - "What process pain points have been identified?"
+  - "What improvements are being implemented?"
+  - "How do these changes affect existing workflows?"
+  - "Are there new quality gates or standards?"
+```
+
+## 🔧 **Smart Update Logic**
+
+### **Dependency Detection**
+```yaml
+# When updating one section, check for related impacts:
+team_size_change:
+  affects:
+    - meeting_patterns: "Larger teams may need different standup formats"
+    - review_assignments: "More reviewers available, adjust pools"
+    - documentation: "Onboarding docs may need capacity updates"
+
+new_technology:
+  affects:
+    - commit_scopes: "May need new scope for technology area"
+    - reviewer_expertise: "May need specialists for new tech"
+    - quality_checks: "May need tech-specific testing/validation"
+    - documentation: "Architecture docs need updates"
+```
+
+### **Validation Rules**
+```yaml
+# Ensure updates maintain consistency:
+consistency_checks:
+  - team_size_vs_meeting_patterns: "Meeting patterns should scale with team size"
+  - tech_stack_vs_commit_scopes: "All major technologies should have commit scopes"
+  - reviewer_pools_vs_team_size: "Reviewer assignments should match available team"
+  - quality_checks_vs_project_type: "Quality standards should fit project complexity"
+```
+
+## 🎯 **Update Execution**
+
+### **Incremental Update Process**
+1. **Read current workflow-rules.yml** - understand existing configuration
+2. **Identify update requirements** - determine what needs to change
+3. **Detect related impacts** - find other sections that need updates
+4. **Generate update plan** - show what will change and why
+5. **Apply updates systematically** - maintain file structure and consistency
+6. **Validate final configuration** - ensure all changes work together
+7. **Suggest follow-up actions** - context updates, documentation, team communication
+
+### **Output Format**
+```yaml
+# Update Summary
+changes_applied:
+  - section: "team_context"
+    change: "Updated team size from 5 to 6 engineers"
+    rationale: "New senior engineer joined the team"
+  
+  - section: "git.workflows.pull_requests.auto_reviewers"
+    change: "Added 'caching_specialist' reviewer role"
+    rationale: "New Redis integration requires caching expertise"
+  
+  - section: "git.commit_convention.scopes"
+    change: "Added 'cache' scope"
+    rationale: "Support Redis and caching-related commits"
+
+follow_up_actions:
+  - "Run @update-context to regenerate LLM context files"
+  - "Update team documentation with new member information"
+  - "Communicate workflow changes to team via Slack"
+  - "Schedule Redis architecture review session"
+```
+
+## 🔍 **Common Update Scenarios**
+
+### **New Engineer Onboarding**
+```bash
+@update-workflow-rules
+# → Detects team growth scenario
+# → Updates team size, meeting patterns, reviewer pools
+# → Adds new expertise areas if applicable
+# → Suggests documentation updates
+```
+
+### **Technology Stack Addition**
+```bash
+@update-workflow-rules
+# → Identifies new technology integration
+# → Adds appropriate commit scopes and reviewer roles
+# → Updates quality checks if needed
+# → Suggests architecture documentation updates
+```
+
+### **Process Improvement**
+```bash
+@update-workflow-rules
+# → Analyzes current process pain points
+# → Implements workflow improvements
+# → Updates quality standards and review processes
+# → Suggests team communication about changes
+```
+
+### **Project Scope Evolution**
+```bash
+@update-workflow-rules
+# → Assesses project scope changes
+# → Updates audience, purpose, success criteria
+# → Adjusts workflow complexity to match new scope
+# → Suggests stakeholder communication
+```
+
+## 🚀 **Execution**
+
+1. **Analyze current workflow-rules.yml** - understand existing configuration
+2. **Determine update category** - team/technology/process/project changes
+3. **Gather specific update requirements** - interactive questions for details
+4. **Generate comprehensive update plan** - show all changes and impacts
+5. **Apply updates systematically** - maintain consistency and validation
+6. **Suggest follow-up actions** - context updates, documentation, communication
+
+Execute the intelligent workflow rules update now.

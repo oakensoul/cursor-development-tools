@@ -1,0 +1,160 @@
+---
+name: "generate-business-context"
+description: "Generate business-context.llms with company and industry information"
+author: "@oakensoul"
+tags: ["context", "business", "stakeholders", "company"]
+context_files: ["../../workflow-rules.yml"]
+---
+
+# Business Context Generator
+
+Generate comprehensive `business-context.llms` from workflow-rules.yml to provide LLMs with essential business understanding.
+
+## 🎯 **Purpose**
+
+Create business context that helps AI understand:
+- **Company landscape** - industry, focus, competitive position
+- **Stakeholder ecosystem** - who depends on our work and how
+- **Data strategy** - how data flows and creates business value
+- **Success metrics** - what outcomes matter to the business
+
+## 📋 **Content Extraction**
+
+### **From workflow-rules.yml**
+Extract and expand on:
+- Company name, industry, data focus
+- Primary stakeholders and their needs
+- Team collaboration patterns
+- Business goals and success criteria
+
+### **Industry Context**
+For your organization specifically:
+- Sports technology and analytics industry
+- Real-time data processing requirements  
+- Fan engagement and user experience focus
+- Data-driven decision making across organization
+
+### **Stakeholder Analysis**
+Identify and describe:
+- **Primary stakeholders** - direct consumers of our work
+- **Secondary stakeholders** - indirectly affected by our outputs
+- **Communication patterns** - how we interact with each group
+- **Success criteria** - how each stakeholder measures our value
+
+## 🏢 **Content Structure**
+
+### **Company Overview Section**
+- Industry position and competitive landscape
+- Core business model and revenue drivers
+- Data strategy and analytics maturity
+- Technology adoption and innovation approach
+
+### **Stakeholder Ecosystem Section**
+- **Product Teams** - feature development, user experience, growth metrics
+- **Marketing** - campaign effectiveness, user acquisition, engagement analysis
+- **Business Intelligence** - executive reporting, strategic analysis, trend identification
+- **Customer Success** - user satisfaction, retention, support optimization
+- **Executive Leadership** - strategic decisions, business performance, competitive analysis
+
+### **Data Landscape Section**
+- **Data Sources** - where business-critical data originates
+- **Data Flow** - how information moves through the organization
+- **Business Impact** - how data drives decisions and outcomes
+- **Quality Requirements** - accuracy, timeliness, completeness standards
+
+### **Collaboration Patterns Section**
+- **Daily Interactions** - routine stakeholder engagement
+- **Project Workflows** - how cross-functional work gets done
+- **Communication Channels** - Slack, meetings, documentation, dashboards
+- **Escalation Procedures** - how urgent issues get resolved
+
+### **Success Metrics Section**
+- **Business KPIs** - revenue, growth, user engagement metrics
+- **Data Quality Metrics** - accuracy, freshness, completeness measures
+- **Team Performance** - delivery speed, stakeholder satisfaction, system reliability
+- **Strategic Impact** - how our work enables business strategy execution
+
+## 🧠 **LLM Optimization**
+
+### **Decision Support Context**
+Help AI understand:
+- **Business priorities** - what matters most to stakeholders
+- **Trade-off decisions** - speed vs accuracy, cost vs capability
+- **Communication style** - how to present technical work to business audiences
+- **Urgency assessment** - what constitutes a business-critical issue
+
+### **Stakeholder Communication**
+Guide AI on:
+- **Audience-appropriate language** - technical detail level for each stakeholder
+- **Business impact framing** - connecting technical work to business outcomes
+- **Success story examples** - how to demonstrate value and impact
+- **Problem escalation** - when and how to involve different stakeholders
+
+## 📄 **Expected Output Structure**
+
+```markdown
+# Business Context: [Company Name] [Department/Team]
+
+## Auto-Generated Context
+**Source**: workflow-rules.yml + business knowledge
+**Generated**: [timestamp]
+**Purpose**: Business context for AI decision-making
+
+## Company Overview
+[Industry position, business model, data strategy]
+
+## Stakeholder Ecosystem
+[Detailed breakdown of who depends on our work]
+
+## Data Landscape
+[How data flows and creates business value]
+
+## Collaboration Patterns
+[How we work with other teams daily]
+
+## Success Metrics
+[What outcomes matter to the business]
+
+## Communication Guidelines
+[How to present technical work to business audiences]
+
+## Decision Framework
+[How to prioritize and make trade-offs with business context]
+
+## Common Business Scenarios
+[Examples of typical stakeholder requests and how to handle them]
+```
+
+## 🔍 **Business Intelligence Guidelines**
+
+### **Stakeholder-Centric Thinking**
+- **Understand stakeholder goals** - what each team is trying to achieve
+- **Recognize constraints** - budget, timeline, resource limitations
+- **Identify dependencies** - how teams rely on each other's outputs
+- **Appreciate success metrics** - how each stakeholder measures progress
+
+### **Data Business Value**
+- **Revenue impact** - how data work drives business outcomes
+- **Efficiency gains** - how automation and insights save time/cost
+- **Decision enablement** - how data supports strategic choices
+- **Competitive advantage** - how data capabilities differentiate the business
+
+## 🔍 **Quality Standards**
+
+Ensure the generated content:
+- [ ] **Accurately reflects** business context from workflow-rules.yml
+- [ ] **Serves the stated purpose** and target audience from workflow-rules.yml
+- [ ] **Focuses on stakeholder needs** relevant to the project type
+- [ ] **Includes practical examples** from business scenarios
+- [ ] **Connects to project goals** and success metrics
+- [ ] **Uses appropriate complexity** for the intended audience
+
+## 🚀 **Execution**
+
+1. **Extract business info** from workflow-rules.yml
+2. **Expand with industry context** specific to sports technology/analytics
+3. **Detail stakeholder relationships** and communication patterns
+4. **Generate comprehensive business-context.llms** file
+5. **Validate business accuracy** with team knowledge
+
+Generate the complete business context file optimized for LLM understanding of business priorities and stakeholder needs.

@@ -1,0 +1,47 @@
+{
+  "version": "1.0",
+  "description": "AI-powered workflow automation prompts for documentation projects",
+  "categories": {
+    "git": {
+      "description": "Primary git workflow automation",
+      "commands": [
+        "shipit",
+        "commit", 
+        "push",
+        "pr",
+        "branch",
+        "hotfix",
+        "git-workflow"
+      ]
+    },
+    "context": {
+      "description": "LLM context file generation and management",
+      "commands": [
+        "update-context",
+        "generate-project-overview",
+        "generate-business-context", 
+        "generate-tech-stack",
+        "generate-team-context"
+      ]
+    },
+    "config": {
+      "description": "Foundation configuration file management", 
+      "commands": [
+        "init-workflow-rules",
+        "update-workflow-rules",
+        "init-ai-guidance",
+        "update-ai-guidance"
+      ]
+    }
+  },
+  "quick_start": [
+    "shipit",
+    "update-context", 
+    "init-workflow-rules"
+  ],
+  "context_files": {
+    "workflow-rules.yml": "Primary project configuration and standards",
+    "ai-guidance.llms": "Natural language AI decision-making context",
+    "llms/": "Generated context files for instant AI understanding"
+  }
+}

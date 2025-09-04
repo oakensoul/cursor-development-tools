@@ -1,0 +1,171 @@
+---
+name: "generate-tech-stack"
+description: "Generate tech-stack.llms with comprehensive technology context"
+author: "@oakensoul"
+tags: ["context", "technology", "stack", "tools"]
+context_files: ["../../workflow-rules.yml"]
+---
+
+# Technology Stack Context Generator
+
+Generate comprehensive `tech-stack.llms` from workflow-rules.yml to provide LLMs with deep technical context.
+
+## 🎯 **Purpose**
+
+Create technical context that helps AI understand:
+- **Technology ecosystem** - tools, platforms, integration patterns
+- **Development workflows** - how code gets written, reviewed, deployed
+- **Data architecture** - how information flows through systems
+- **Operational practices** - monitoring, incident response, maintenance
+
+## 🔧 **Content Extraction**
+
+### **From workflow-rules.yml**
+Extract and expand technical details:
+- Data warehouse, transformation, BI platforms
+- Development tools, version control, AI assistants
+- Orchestration, monitoring, operational tools
+- Standards, conventions, quality practices
+
+### **Technology Categories**
+
+#### **Data Infrastructure**
+- **Snowflake** - cloud data warehouse, analytics database
+- **dbt Cloud** - data transformation, modeling, testing
+- **Airflow** - workflow orchestration, pipeline scheduling
+- **Kafka** - real-time event streaming, data ingestion
+
+#### **Analytics & BI**
+- **Metabase** - self-service dashboards, business intelligence
+- **SQL** - primary query language, data analysis
+- **Dashboard standards** - visualization best practices
+- **Self-service analytics** - stakeholder enablement
+
+#### **Development Tools**
+- **GitHub** - version control, collaboration, code review
+- **Cursor AI** - AI-powered development environment
+- **Python** - data processing, automation, scripting
+- **Docker** - containerization, deployment consistency
+
+#### **Collaboration Platforms**
+- **Slack** - team communication, notifications, integrations
+- **Jira** - project management, issue tracking
+- **Confluence** - documentation, knowledge sharing
+- **Google Workspace** - documents, spreadsheets, presentations
+
+## 📋 **Content Structure**
+
+### **Core Data Platforms Section**
+- **Snowflake architecture** - warehouses, databases, schemas, roles
+- **dbt workflow** - development, testing, deployment patterns
+- **Integration patterns** - how platforms connect and share data
+- **Performance considerations** - optimization, cost management
+
+### **Development Ecosystem Section**
+- **Git workflows** - branching, review, deployment strategies
+- **AI tooling** - Cursor, GitHub Copilot, automation capabilities
+- **Code standards** - style guides, review criteria, quality gates
+- **Testing approaches** - data quality, integration, regression testing
+
+### **Operational Stack Section**
+- **Monitoring systems** - data quality, pipeline health, performance
+- **Incident response** - alerting, escalation, resolution processes
+- **Deployment practices** - CI/CD, staging, production promotion
+- **Security measures** - access control, secrets management, compliance
+
+### **Integration Architecture Section**
+- **Data flow patterns** - ingestion, transformation, consumption
+- **API integrations** - third-party services, internal systems
+- **Real-time processing** - streaming, event-driven architectures
+- **Batch processing** - scheduled jobs, bulk data operations
+
+## 🧠 **Technical Decision Context**
+
+### **Platform Selection Rationale**
+- **Why Snowflake** - cloud-native, scaling, performance benefits
+- **Why dbt** - version control, testing, documentation for data
+- **Why Metabase** - self-service, ease of use, stakeholder adoption
+- **Why these tools together** - integration benefits, workflow efficiency
+
+### **Architecture Principles**
+- **Separation of concerns** - clear boundaries between systems
+- **Data quality first** - testing, validation, monitoring at every stage
+- **Self-service enablement** - stakeholders can access data independently
+- **Scalability by design** - systems can grow with business needs
+
+### **Technical Constraints**
+- **Performance requirements** - query speed, dashboard load times
+- **Cost considerations** - cloud spending, resource optimization
+- **Security compliance** - data protection, access controls
+- **Integration complexity** - system dependencies, data consistency
+
+## 📄 **Expected Output Structure**
+
+```markdown
+# Technology Stack: [Company Name] [Department/Team]
+
+## Auto-Generated Context
+**Source**: workflow-rules.yml + technical knowledge
+**Generated**: [timestamp]
+**Purpose**: Comprehensive technical context for AI decision-making
+
+## Core Data Platform
+[Snowflake, dbt, data architecture details]
+
+## Analytics & BI Stack
+[Metabase, dashboard standards, self-service analytics]
+
+## Development Ecosystem
+[Git, AI tools, development workflow, code standards]
+
+## Operational Infrastructure
+[Monitoring, deployment, incident response, security]
+
+## Integration Patterns
+[How systems connect, data flows, API integrations]
+
+## Technical Standards
+[Coding conventions, review processes, quality requirements]
+
+## Architecture Principles
+[Design philosophy, trade-offs, decision frameworks]
+
+## Common Technical Scenarios
+[Examples of typical technical decisions and approaches]
+
+## Troubleshooting Context
+[Common issues, debugging approaches, escalation procedures]
+```
+
+## 🔧 **Technical Guidance for AI**
+
+### **Technology Recommendations**
+Help AI understand:
+- **When to use which tool** - appropriate technology for different problems
+- **Integration best practices** - how to connect systems effectively
+- **Performance optimization** - query tuning, resource management
+- **Security considerations** - data protection, access control patterns
+
+### **Development Workflow Context**
+Guide AI on:
+- **Code review standards** - what makes a good technical review
+- **Testing strategies** - data quality, integration, regression approaches
+- **Deployment practices** - safe promotion, rollback procedures
+- **Documentation requirements** - technical specs, API docs, operational guides
+
+### **Troubleshooting Intelligence**
+Provide AI with:
+- **Common failure patterns** - typical issues and their solutions
+- **Debugging approaches** - systematic problem-solving methods
+- **Escalation criteria** - when to involve different expertise levels
+- **Performance diagnostics** - identifying and resolving bottlenecks
+
+## 🚀 **Execution**
+
+1. **Extract technical details** from workflow-rules.yml
+2. **Expand with platform specifics** for Snowflake, dbt, Metabase, etc.
+3. **Include operational context** for real-world system management
+4. **Generate comprehensive tech-stack.llms** file
+5. **Validate technical accuracy** with current system configurations
+
+Generate the complete technology stack context file optimized for AI understanding of technical decisions and architecture.

@@ -1,0 +1,31 @@
+---
+targeting: [".cursor/**/*.mdc", ".cursor/**/*.yml", ".cursor/**/*.llms"]
+priority: highest
+scope: "ai_workflow_context"
+---
+
+# Workflow Automation Context
+
+## Project Context Files
+
+This documentation project uses declarative AI commands with structured context:
+
+### Context File Structure
+- **`workflow-rules.yml`** - Structured workflow rules, commit conventions, branching strategy (source of truth)
+- **`ai-guidance.llms`** - Natural language guidance for AI decision-making and workflow intelligence
+- **`llms/*.llms`** - Auto-generated project context (project-overview, business-context, tech-stack, team-context)
+
+### Git Workflow Integration
+When users invoke git commands (like `@shipit`, `@commit`, `@hotfix`), these context files provide:
+- Conventional commit formatting rules
+- Branching strategy decisions (direct-to-main vs feature-branch)
+- PR creation criteria and reviewer assignment
+- Emergency hotfix procedures
+
+### AI Behavior
+- **Don't duplicate context**: These files are explicitly referenced by git prompts
+- **Respect workflow decisions**: Follow the structured rules in workflow-rules.yml
+- **Understand urgency levels**: Use hotfix criteria for emergency documentation fixes
+- **Apply team standards**: Conventional commits, proper branch naming, appropriate review processes
+
+The goal is **declarative git workflows** where users say "please commit these changes" rather than "how do I commit these changes."

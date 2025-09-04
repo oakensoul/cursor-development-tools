@@ -1,0 +1,158 @@
+---
+name: "generate-team-context"
+description: "Generate team-context.llms with team structure and collaboration info"
+author: "@oakensoul"
+tags: ["context", "team", "collaboration", "processes"]
+context_files: ["../../workflow-rules.yml"]
+---
+
+# Team Context Generator
+
+Generate comprehensive `team-context.llms` from workflow-rules.yml to provide LLMs with essential team understanding.
+
+## 🎯 **Purpose**
+
+Create team context that helps AI understand:
+- **Team structure** - roles, responsibilities, experience levels
+- **Collaboration patterns** - how work gets coordinated and completed
+- **Communication practices** - meetings, channels, documentation
+- **Growth and development** - onboarding, learning, career progression
+
+## 👥 **Content Extraction**
+
+### **From workflow-rules.yml**
+Extract and expand team details:
+- Team size, experience levels, role distribution
+- Meeting patterns, planning cycles, review processes
+- Communication channels, escalation procedures
+- On-call rotation, incident response, support patterns
+
+### **Team Dynamics**
+Understand and document:
+- **Collaboration style** - how decisions get made, consensus building
+- **Knowledge sharing** - documentation, code reviews, mentoring
+- **Work distribution** - project assignment, expertise areas, workload balance
+- **Continuous improvement** - retrospectives, process iteration, learning culture
+
+## 📋 **Content Structure**
+
+### **Team Composition Section**
+- **Size and scale** - current team size, growth trajectory
+- **Experience levels** - junior, mid-level, senior distribution
+- **Role specialization** - areas of expertise, technical focus areas
+- **Cross-functional skills** - overlapping capabilities, knowledge sharing
+
+### **Collaboration Processes Section**
+- **Daily operations** - standups, async updates, decision-making
+- **Sprint planning** - story estimation, capacity planning, commitment practices
+- **Code review** - standards, feedback culture, knowledge transfer
+- **Documentation** - writing practices, maintenance, accessibility
+
+### **Communication Patterns Section**
+- **Meeting cadence** - daily standups, sprint planning, retrospectives
+- **Slack channels** - team discussion, notifications, cross-team coordination
+- **Decision communication** - how choices get documented and shared
+- **Stakeholder interaction** - regular touchpoints, escalation paths
+
+### **Development Culture Section**
+- **Learning orientation** - experimentation, skill development, knowledge sharing
+- **Quality focus** - testing practices, code standards, continuous improvement
+- **Innovation balance** - new technology adoption vs stability
+- **Work-life balance** - sustainable pace, flexibility, team support
+
+### **Support and Escalation Section**
+- **On-call responsibilities** - rotation schedule, incident response procedures
+- **Expertise distribution** - who knows what, when to ask whom
+- **Help resources** - documentation, mentoring, external resources
+- **Problem escalation** - technical issues, stakeholder conflicts, resource needs
+
+## 🤝 **Team Intelligence for AI**
+
+### **Collaboration Effectiveness**
+Help AI understand:
+- **How decisions get made** - consensus building, expertise consultation
+- **Communication preferences** - async vs sync, formal vs informal
+- **Knowledge sharing patterns** - documentation, code reviews, mentoring
+- **Conflict resolution** - how disagreements get resolved constructively
+
+### **Work Assignment Intelligence**
+Guide AI on:
+- **Expertise areas** - who has deep knowledge in which domains
+- **Workload considerations** - capacity, competing priorities, burnout prevention
+- **Growth opportunities** - skill development, stretch assignments, mentoring
+- **Cross-training needs** - knowledge distribution, bus factor mitigation
+
+### **Cultural Context**
+Provide AI with:
+- **Team values** - quality, collaboration, continuous learning
+- **Communication style** - direct feedback, supportive culture, psychological safety
+- **Work approach** - iterative improvement, data-driven decisions, stakeholder focus
+- **Success celebration** - how achievements get recognized and shared
+
+## 📄 **Expected Output Structure**
+
+```markdown
+# Team Context: [Company Name] [Department/Team]
+
+## Auto-Generated Context
+**Source**: workflow-rules.yml + team knowledge
+**Generated**: [timestamp]
+**Purpose**: Team dynamics and collaboration context for AI
+
+## Team Composition
+[Size, roles, experience levels, expertise distribution]
+
+## Collaboration Processes
+[How work gets planned, executed, and reviewed]
+
+## Communication Patterns
+[Meetings, channels, decision documentation, stakeholder interaction]
+
+## Development Culture
+[Learning, quality, innovation, work-life balance]
+
+## Knowledge Sharing
+[Documentation, mentoring, code reviews, expertise areas]
+
+## Support Systems
+[On-call, escalation, help resources, problem resolution]
+
+## Team Growth
+[Onboarding, skill development, career progression, capacity planning]
+
+## Decision Framework
+[How choices get made, expertise consultation, consensus building]
+
+## Common Team Scenarios
+[Examples of typical collaboration patterns and how they work]
+```
+
+## 👥 **Team-Specific Guidance**
+
+### **Onboarding Context**
+- **New hire experience** - first day, first week, first month expectations
+- **Knowledge transfer** - essential skills, system familiarity, team integration
+- **Mentorship approach** - pairing, guidance, feedback, growth planning
+- **Success metrics** - productivity milestones, contribution patterns, team fit
+
+### **Collaboration Effectiveness**
+- **Meeting efficiency** - preparation, participation, follow-up, action items
+- **Code review culture** - constructive feedback, knowledge sharing, quality gates
+- **Documentation practices** - writing, maintenance, accessibility, discoverability
+- **Cross-team coordination** - stakeholder management, dependency resolution
+
+### **Professional Development**
+- **Skill building** - technical growth, leadership development, domain expertise
+- **Career progression** - advancement paths, goal setting, feedback cycles
+- **Knowledge sharing** - internal presentations, documentation, mentoring others
+- **External engagement** - conferences, communities, industry participation
+
+## 🚀 **Execution**
+
+1. **Extract team details** from workflow-rules.yml
+2. **Expand with collaboration context** specific to data engineering teams
+3. **Include cultural and developmental aspects** for comprehensive understanding
+4. **Generate complete team-context.llms** file
+5. **Validate team accuracy** with current team dynamics and practices
+
+Generate the complete team context file optimized for AI understanding of team collaboration, culture, and development patterns.
