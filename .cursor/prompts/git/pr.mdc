@@ -1,0 +1,295 @@
+---
+name: "pr"
+description: "Smart pull request creation with auto-generated descriptions"
+author: "@oakensoul"
+tags: ["git", "pull-request", "documentation", "declarative"]
+context_files: ["../workflow-rules.yml", "../ai-guidance.llms"]
+---
+
+# Smart Pull Request Creator
+
+Create comprehensive pull requests with auto-generated descriptions and appropriate reviewers.
+
+## Command Format
+- `@pr` - Auto-generate PR from branch commits
+- `@pr "Custom Title"` - PR with custom title
+- `@pr --draft` - Create draft PR for work in progress
+- `@pr --reviewers @user1,@user2` - Specify custom reviewers
+- `@pr --update-context` - Force regeneration of context files before PR creation
+
+## Auto-Generation Logic
+
+### Title Generation
+```
+Format: docs({scope}): {main_change_summary}
+
+Examples:
+- docs(setup): add comprehensive project initialization guide
+- docs(prompts): update git workflow configurations  
+- docs(context): restructure AI guidance and rules
+- fix(config): correct prompt metadata and file references
+```
+
+### Description Template
+```markdown
+## Summary
+{Auto-generated summary of what this PR accomplishes}
+
+## Changes Made
+{Bullet list of specific changes from commit analysis}
+
+## Files Changed
+{List of modified files with brief description of changes}
+
+## Review Focus
+{Specific areas reviewers should pay attention to}
+
+## Context
+{Business or technical context for the changes}
+
+## Testing/Validation
+{Any validation steps taken or needed}
+```
+
+### Reviewer Assignment Logic
+```yaml
+# From project-context.yml and commit analysis:
+onboarding_changes: [manager, recent_new_hire]
+business_context: [stakeholder_contact]
+technical_architecture: [senior_engineer]
+team_processes: [team_lead]
+cross_functional: [multiple_stakeholders]
+substantial_changes: [manager, senior_engineer]
+```
+
+## Pre-Execution Platform Check
+
+### **Git Platform Compatibility Verification**
+```bash
+# CRITICAL: Check platform support before proceeding
+PLATFORM=$(grep "platform:" .cursor/workflow-rules.yml | cut -d'"' -f2 2>/dev/null || echo "unknown")
+
+case "$PLATFORM" in
+    "github")
+        # Verify GitHub CLI authentication
+        gh auth status 2>/dev/null || {
+            echo "❌ GITHUB AUTHENTICATION REQUIRED"
+            echo ""
+            echo "GitHub CLI is not authenticated. Please run:"
+            echo "  gh auth login"
+            echo ""
+            echo "Then retry this command."
+            exit 1
+        }
+        echo "✅ GitHub platform detected - full PR support available"
+        ;;
+    "gitlab"|"bitbucket"|"azure_devops"|"other")
+        echo "⚠️  PLATFORM NOT SUPPORTED"
+        echo ""
+        echo "Platform: $PLATFORM"
+        echo "This command only supports GitHub repositories."
+        echo ""
+        echo "Available alternatives:"
+        echo "  @commit - Create commits with AI-generated messages"
+        echo "  @branch - Create contextual branches"
+        echo "  @push   - Push changes to remote"
+        echo ""
+        echo "For PR creation, use your platform's web interface or CLI tools."
+        exit 1
+        ;;
+    *)
+        echo "⚠️  PLATFORM UNKNOWN"
+        echo ""
+        echo "Could not detect git platform from workflow-rules.yml"
+        echo "This command requires GitHub. For other platforms:"
+        echo "  Use @commit, @branch, @push for git workflows"
+        echo "  Create PRs manually through your platform's interface"
+        exit 1
+        ;;
+esac
+```
+
+## Execution Protocol
+
+1. **Context & Branch Analysis**:
+   - Check if workflow-rules.yml is modified (offer context update)
+   - Parse all commits since branch creation
+   - Identify files changed and scope of modifications
+   - Determine content type and collaboration needs
+
+2. **Generate Content**:
+   - Create descriptive title from commit patterns
+   - Build comprehensive description from changes
+   - Suggest appropriate reviewers from context
+
+3. **Create PR**:
+   - Push branch if not already remote
+   - Create GitHub PR with generated content
+   - Apply appropriate labels and metadata
+   - Set up review requests
+
+## Context Update Integration
+
+### **Automatic Detection**
+When creating a PR, check for .cursor configuration modifications:
+```bash
+# If workflow-rules.yml changed in commits:
+- Prompt: "workflow-rules.yml updated - regenerate context files for this PR?"
+- Execute: @update-context if user confirms
+- Include: Add generated context files to current commit before PR creation
+```
+
+### **Force Update Option**
+```bash
+@pr --update-context "description"
+# Always regenerates context files regardless of workflow-rules.yml changes
+# Useful when context files are stale or project has evolved
+```
+
+### **Context Review Integration**
+When workflow-rules.yml or context files are modified:
+- **Auto-add context reviewers**: Include senior engineer + manager for context validation
+- **Enhanced PR description**: Include section about context changes and their impact
+- **Review guidance**: Specific focus areas for validating generated context accuracy
+
+### **Context Change Communication**
+PR descriptions automatically include context update information:
+```markdown
+## Context Updates
+- ✅ LLM context files regenerated from updated workflow-rules.yml
+- 📋 Review focus: Validate business context accuracy, tech stack details
+- 🎯 Impact: Improved AI understanding of project standards and team processes
+```
+
+## Output Format
+
+### Successful PR Creation
+```
+✅ CREATED: Pull Request #42
+📝 Title: docs(setup): add comprehensive project initialization guide
+🔗 URL: https://github.com/oakensoul/cursor-development-tools/pull/42
+👥 Reviewers: @manager, @recent-new-hire  
+🏷️ Labels: documentation, onboarding
+📋 Status: Ready for review
+```
+
+### Draft PR Creation
+```
+📝 CREATED: Draft Pull Request #43
+📝 Title: docs(prompts): WIP - modernize git workflow prompts
+🔗 URL: https://github.com/oakensoul/cursor-development-tools/pull/43
+⚠️  Status: Draft (mark ready when complete)
+👥 Reviewers: Will be assigned when marked ready
+```
+
+### PR with Context Updates
+```
+✅ CREATED: Pull Request #44
+📝 Title: docs(config): update prompt metadata and add new workflow rules
+🔗 URL: https://github.com/oakensoul/cursor-development-tools/pull/44
+👥 Reviewers: @manager, @senior-engineer, @team-lead
+🏷️ Labels: documentation, workflow-rules, context-update
+📋 Status: Ready for review
+
+🔄 CONTEXT UPDATED:
+- .cursor configuration modified → regenerated all LLM context files
+- Updated: prompt metadata, added new git workflow rules
+- Context files: project-overview.llms, business-context.llms, tech-stack.llms, team-context.llms
+- Review focus: Validate team structure accuracy, confirm tech stack details
+
+📋 Next: Context validation and standard documentation review
+```
+
+## Content Examples
+
+### Generated PR Description
+```markdown
+## Summary
+This PR adds a comprehensive setup guide to the cursor development tools, addressing common configuration issues encountered when implementing the .cursor system in new projects.
+
+## Changes Made
+- ✅ Added troubleshooting section to .cursor/SETUP.md
+- ✅ Created dedicated setup troubleshooting guide
+- ✅ Updated main README navigation to include setup guidance
+- ✅ Added cross-references from installation steps to troubleshooting
+
+## Files Changed
+- `.cursor/SETUP.md` - Added troubleshooting section and navigation
+- `.cursor/setup-troubleshooting.md` - New comprehensive setup guide  
+- `README.md` - Updated quick reference with setup guidance link
+
+## Review Focus
+- Are the troubleshooting scenarios realistic and helpful?
+- Do the solutions match our current .cursor configurations?
+- Is the organization logical for someone setting up the system?
+- Any missing common problems from cursor/AI workflow setup?
+
+## Context
+Based on feedback from developers implementing this system, particularly around prompt configuration and context file generation issues.
+
+## Validation
+- ✅ All internal links tested and working
+- ✅ Setup instructions verified on clean project environment
+- ✅ Troubleshooting steps tested with common .cursor configuration scenarios
+```
+
+### Reviewer Assignment Examples
+```yaml
+# Setup and configuration changes
+Files: .cursor/*.md, setup/*.md
+Reviewers: [maintainer, contributor]
+Reason: Maintainer knows system, contributor has implementation experience
+
+# Prompt and workflow updates  
+Files: .cursor/prompts/*.mdc, .cursor/rules/*.mdc
+Reviewers: [maintainer, experienced_user]
+Reason: Verify accuracy of prompt logic and workflow patterns
+
+# Documentation and usage guides
+Files: README.md, docs/*.md
+Reviewers: [maintainer, new_user]
+Reason: Technical accuracy and usability validation
+
+# Cross-functional template changes
+Files: Multiple directories
+Reviewers: [maintainer, contributor, experienced_user]
+Reason: Broad impact requires multiple implementation perspectives
+```
+
+## Integration with Context
+
+### PR Quality Standards
+- Use project tone and style from context.llms
+- Apply documentation standards from project-context.yml
+- Include project-specific context when relevant
+- Focus on team collaboration and knowledge sharing
+
+### Smart Defaults
+- Auto-detect draft vs. ready status based on commit messages
+- Suggest merge strategy based on change scope
+- Include relevant project tags and milestones
+- Set up appropriate notification preferences
+
+## Error Handling
+
+### No Remote Branch
+```
+⚠️  BRANCH NOT PUSHED: Current branch not on remote
+🔧 Action: Pushing branch first...
+✅ PUSHED: docs/onboarding-improvements  
+✅ CREATED: Pull Request #44
+```
+
+### Insufficient Changes
+```
+❌ PR CREATION FAILED: No commits since branch creation
+🚫 Issue: Branch has no changes to review
+💡 Suggestion: Make commits first, then use @pr
+```
+
+### Already Has PR
+```
+ℹ️  PR EXISTS: This branch already has an open pull request
+🔗 Existing: Pull Request #41 - docs(team): update collaboration workflows
+💡 Options: Update existing PR or use @pr --update to modify
+```

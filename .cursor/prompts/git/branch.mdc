@@ -1,0 +1,144 @@
+---
+name: "branch"
+description: "Smart branch creation with naming conventions"
+author: "@oakensoul"
+tags: ["git", "branch", "documentation", "declarative"]
+context_files: ["../workflow-rules.yml", "../ai-guidance.llms"]
+---
+
+# Smart Branch Creator
+
+Create properly named branches following project conventions.
+
+## Command Format
+- `@branch "section-name"` - Create docs branch with auto-naming
+- `@branch "project-name" feature` - Create feature branch
+- `@branch "fix-description" fix` - Create fix branch
+- `@branch "name" --from main` - Create from specific base branch
+
+## Naming Convention Auto-Application
+
+### From project-context.yml
+```yaml
+quick_fixes: direct_to_main (no branch needed)
+substantial_changes: "docs/{section-name}"
+collaborative_work: "feature/{project-name}"
+```
+
+### Branch Type Detection
+```
+Content updates → docs/
+New major sections → feature/
+Bug fixes → fix/
+Team collaboration → feature/
+```
+
+## Execution Logic
+
+1. **Analyze Intent**:
+   - Parse branch name and optional type
+   - Determine appropriate naming convention
+   - Check if branch already exists
+
+2. **Apply Conventions**:
+   - Add appropriate prefix (docs/, feature/, fix/)
+   - Normalize naming (hyphens, lowercase)
+   - Validate against project patterns
+
+3. **Create and Setup**:
+   - Create branch from appropriate base (usually main)
+   - Set upstream tracking
+   - Switch to new branch
+   - Report status and next steps
+
+## Output Format
+
+### Successful Branch Creation
+```
+✅ CREATED: docs/onboarding-troubleshooting
+📝 Pattern: Documentation update branch
+🎯 Base: main (latest: abc1234)
+🔀 Status: Switched to new branch
+📋 Next: Make changes, then @commit when ready
+```
+
+### Auto-Corrected Naming
+```
+✅ CREATED: feature/team-documentation-restructure
+📝 Input: "team docs restructure"
+🔧 Applied: Feature branch naming convention
+🎯 Base: main (latest: def5678)
+📋 Note: Multi-word project name detected, using feature/ prefix
+```
+
+## Examples
+
+### Documentation Section Updates
+```bash
+# Input: @branch "onboarding-improvements"
+# Creates: docs/onboarding-improvements
+# Use: For updating existing onboarding content
+```
+
+### New Major Content
+```bash
+# Input: @branch "stakeholder-interview-guide" feature
+# Creates: feature/stakeholder-interview-guide  
+# Use: For substantial new documentation sections
+```
+
+### Quick Fixes
+```bash
+# Input: @branch "broken-links" fix
+# Creates: fix/broken-links
+# Use: For fixing specific issues across documentation
+```
+
+### Collaborative Projects
+```bash
+# Input: @branch "q4-documentation-audit" feature
+# Creates: feature/q4-documentation-audit
+# Use: For team-wide or cross-functional documentation work
+```
+
+## Integration with Workflow
+
+### Automatic Suggestions
+Based on analysis, suggest appropriate next steps:
+```
+✅ CREATED: docs/architecture-updates
+💡 Suggestion: This looks like substantial changes
+📋 Recommended workflow:
+   1. Make your changes
+   2. @commit with descriptive message
+   3. @push (will suggest PR for review)
+   4. @pr to create pull request
+```
+
+### Context-Aware Guidance
+```
+✅ CREATED: feature/onboarding-restructure
+⚠️  Note: Onboarding changes typically need manager review
+👥 Suggested reviewers: manager, recent_new_hire
+📋 Consider: Coordinate with team for major onboarding changes
+```
+
+## Error Handling
+
+### Branch Already Exists
+```
+❌ BRANCH EXISTS: docs/onboarding-improvements
+🔗 Current: On branch main
+💡 Options:
+   - @branch "onboarding-improvements-v2" for new branch
+   - git checkout docs/onboarding-improvements to switch
+   - git branch -D docs/onboarding-improvements to delete first
+```
+
+### Invalid Base Branch
+```
+❌ BASE NOT FOUND: develop branch does not exist
+🔧 Using: main as base branch instead
+✅ CREATED: docs/architecture-updates from main
+📋 Note: Project uses main as primary branch
+```

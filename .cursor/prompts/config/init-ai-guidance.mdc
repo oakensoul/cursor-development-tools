@@ -1,0 +1,346 @@
+---
+name: "init-ai-guidance"
+description: "Initialize ai-guidance.llms for new projects"
+author: "@oakensoul"
+tags: ["config", "initialization", "ai-guidance", "llm-context"]
+context_files: ["../../workflow-rules.yml"]
+---
+
+# AI Guidance Initializer
+
+Create comprehensive `ai-guidance.llms` file that provides natural language context for AI decision-making.
+
+## 🎯 **Purpose**
+
+Generate ai-guidance.llms that complements workflow-rules.yml with:
+- **Natural language context** that structured YAML can't capture
+- **Decision-making guidance** for complex or nuanced situations
+- **Business context** that helps AI understand trade-offs and priorities
+- **Cultural and team wisdom** that goes beyond formal processes
+
+## 🧠 **Content Categories**
+
+### **Project Understanding**
+```markdown
+# What ai-guidance.llms should explain:
+project_essence:
+  - Why this project exists and who it serves
+  - What success looks like in business terms
+  - How this work connects to larger organizational goals
+  - What constraints and requirements shape decisions
+
+stakeholder_context:
+  - Who depends on this work and how they use it
+  - Communication styles and preferences for different audiences
+  - Escalation patterns and decision-making authority
+  - Success metrics that matter to different stakeholders
+```
+
+### **Technical Decision Context**
+```markdown
+# Decision-making wisdom:
+technology_choices:
+  - Why current tools were chosen over alternatives
+  - Performance vs cost vs complexity trade-offs
+  - Integration constraints and compatibility requirements
+  - Evolution path and future considerations
+
+quality_standards:
+  - What "good enough" means for different situations
+  - When to prioritize speed vs accuracy vs maintainability
+  - How to balance innovation with stability
+  - Risk tolerance and failure handling approaches
+```
+
+### **Team Collaboration Intelligence**
+```markdown
+# Cultural context:
+communication_patterns:
+  - How the team prefers to receive feedback
+  - When to use async vs sync communication
+  - How to escalate issues appropriately
+  - What level of detail different audiences need
+
+workflow_nuances:
+  - When to break normal processes for urgent situations
+  - How to handle edge cases and exceptional circumstances
+  - What constitutes "substantial changes" requiring review
+  - How to balance individual productivity with team coordination
+```
+
+## 📋 **Generation Templates**
+
+### **For Documentation Projects**
+```markdown
+# AI Guidance: {Project Name}
+
+## Primary Reference
+**Always read `workflow-rules.yml` first** - it contains the structured rules, workflows, and standards for this project.
+
+## Project Understanding
+This is a **{project_type} repository** for the {team_name} team at {company_name}, focused on:
+- {primary_purpose_expanded}
+- {secondary_goals_with_context}
+- {business_impact_description}
+
+The documentation serves {target_audience} who need {specific_information_types} to {accomplish_their_goals}.
+
+## Business Context Intelligence
+### Industry and Competitive Context
+{industry_context_and_constraints}
+
+### Stakeholder Ecosystem
+{detailed_stakeholder_descriptions_with_communication_preferences}
+
+### Success Metrics That Matter
+{business_kpis_and_team_success_indicators}
+
+## Decision-Making Framework
+### Content Quality Decisions
+- **Accuracy vs Speed**: {guidance_on_when_to_prioritize_each}
+- **Depth vs Accessibility**: {guidance_on_content_complexity}
+- **Completeness vs Maintenance**: {guidance_on_scope_decisions}
+
+### Workflow Intelligence
+- **Direct-to-main vs PR**: {nuanced_guidance_beyond_formal_rules}
+- **Review Requirements**: {when_to_ask_for_additional_review}
+- **Emergency Procedures**: {when_and_how_to_bypass_normal_process}
+
+## Team Collaboration Context
+### Communication Effectiveness
+{team_communication_preferences_and_patterns}
+
+### Knowledge Sharing
+{how_team_learns_and_shares_expertise}
+
+### Conflict Resolution
+{how_team_handles_disagreements_and_makes_decisions}
+```
+
+### **For Data Pipeline Projects**
+```markdown
+# AI Guidance: {Project Name}
+
+## Primary Reference
+**Always read `workflow-rules.yml` first** - it contains the structured rules, workflows, and standards for this project.
+
+## Project Understanding
+This is a **data pipeline repository** that {processes_specific_data_types} to {enable_specific_business_outcomes}.
+
+The pipeline serves {data_consumers} who need {data_characteristics} for {business_use_cases}.
+
+## Data Quality Philosophy
+### Quality vs Timeliness Trade-offs
+{guidance_on_balancing_accuracy_with_speed}
+
+### Data Governance Principles
+{compliance_requirements_and_data_handling_standards}
+
+### Error Handling Strategy
+{how_to_handle_data_quality_issues_and_pipeline_failures}
+
+## Technical Decision Context
+### Performance Optimization
+{when_to_optimize_vs_when_good_enough}
+
+### Cost Management
+{how_to_balance_performance_with_infrastructure_costs}
+
+### Integration Patterns
+{how_to_connect_with_other_systems_and_data_sources}
+
+## Stakeholder Collaboration
+### Data Consumer Support
+{how_to_interact_with_analysts_and_business_users}
+
+### Issue Escalation
+{when_and_how_to_escalate_data_quality_or_pipeline_issues}
+
+### Change Communication
+{how_to_communicate_pipeline_changes_to_downstream_consumers}
+```
+
+### **For API/Service Projects**
+```markdown
+# AI Guidance: {Project Name}
+
+## Primary Reference
+**Always read `workflow-rules.yml` first** - it contains the structured rules, workflows, and standards for this project.
+
+## Project Understanding
+This is an **API service** that {provides_specific_functionality} to {service_consumers}.
+
+The service enables {business_capabilities} while maintaining {performance_and_reliability_requirements}.
+
+## Service Design Philosophy
+### Performance vs Flexibility
+{guidance_on_API_design_trade_offs}
+
+### Backward Compatibility
+{how_to_handle_API_changes_and_versioning}
+
+### Error Handling and Resilience
+{how_to_design_for_failure_and_recovery}
+
+## Operational Excellence
+### Monitoring and Alerting
+{what_to_monitor_and_when_to_alert}
+
+### Deployment Strategy
+{how_to_balance_deployment_speed_with_stability}
+
+### Incident Response
+{how_to_handle_service_outages_and_performance_issues}
+
+## Integration Context
+### Consumer Expectations
+{how_different_API_consumers_use_the_service}
+
+### Dependency Management
+{how_to_handle_upstream_and_downstream_dependencies}
+
+### Security Considerations
+{authentication_authorization_and_data_protection_approach}
+```
+
+## 🎯 **Context Integration**
+
+### **Workflow-Rules.yml Connection**
+```markdown
+# How ai-guidance.llms complements workflow-rules.yml:
+structured_rules → natural_language_context
+commit_conventions → "why these conventions serve our team's needs"
+branching_strategy → "when to use each branch type and why"
+review_assignments → "how to provide effective feedback to each reviewer type"
+quality_checks → "what quality means in different situations"
+```
+
+### **Business Intelligence Layer**
+```markdown
+# Business context that helps AI make better decisions:
+stakeholder_priorities:
+  - "Product team values user impact over technical elegance"
+  - "Finance team requires audit trails and cost visibility"
+  - "Marketing team needs campaign attribution and performance data"
+
+trade_off_guidance:
+  - "Speed vs accuracy: err on speed for exploratory analysis, accuracy for business decisions"
+  - "Cost vs performance: optimize for cost unless user experience is affected"
+  - "Innovation vs stability: stable foundations enable safe innovation"
+```
+
+### **Cultural Wisdom**
+```markdown
+# Team culture and collaboration patterns:
+feedback_culture:
+  - "Direct feedback is valued - specific suggestions over general praise"
+  - "Questions are encouraged - assume positive intent and genuine curiosity"
+  - "Learning orientation - mistakes are learning opportunities"
+
+collaboration_patterns:
+  - "Async-first communication - meetings for complex discussion only"
+  - "Documentation-driven decisions - capture reasoning for future reference"
+  - "Proactive help - offer assistance when you see someone struggling"
+```
+
+## 🔍 **Quality Guidelines**
+
+### **Effective AI Guidance Characteristics**
+```yaml
+content_quality:
+  specific: "Concrete scenarios better than abstract principles"
+  actionable: "Clear guidance on what to do in specific situations"
+  contextual: "Connect technical decisions to business outcomes"
+  nuanced: "Address edge cases and exceptional circumstances"
+
+writing_style:
+  conversational: "Write as if explaining to a new team member"
+  practical: "Focus on real situations the team encounters"
+  balanced: "Acknowledge trade-offs rather than prescriptive rules"
+  empathetic: "Consider different perspectives and working styles"
+```
+
+### **Content Validation**
+```yaml
+validation_checks:
+  accuracy: "Does this reflect actual team practices and values?"
+  completeness: "Are important decision contexts covered?"
+  consistency: "Does this align with workflow-rules.yml?"
+  usefulness: "Will this help AI make better suggestions?"
+```
+
+## 🚀 **Execution Protocol**
+
+### **Generation Process**
+1. **Read workflow-rules.yml** - understand formal project configuration
+2. **Analyze project type** - determine appropriate template and focus areas
+3. **Gather team context** - understand culture, values, and collaboration patterns
+4. **Generate natural language guidance** - create comprehensive AI context
+5. **Validate against workflow rules** - ensure consistency and complementarity
+6. **Optimize for AI consumption** - structure for easy parsing and understanding
+
+### **Output Structure**
+```markdown
+# AI Guidance: {Project Name}
+
+## Primary Reference
+[Connection to workflow-rules.yml]
+
+## Project Understanding
+[High-level context and purpose]
+
+## Business Context Intelligence
+[Stakeholder ecosystem and success metrics]
+
+## Decision-Making Framework
+[Trade-offs and judgment guidance]
+
+## Technical Context
+[Technology choices and constraints]
+
+## Team Collaboration Context
+[Communication and cultural patterns]
+
+## Common Scenarios
+[Specific situations and how to handle them]
+
+## Edge Cases and Exceptions
+[When to break normal patterns and why]
+```
+
+## 🔧 **Customization Options**
+
+### **Industry-Specific Guidance**
+```yaml
+# Tailor content for specific industries:
+gaming_and_sports_betting:
+  - "Regulatory compliance affects all technical decisions"
+  - "Real-time data accuracy is critical for user trust"
+  - "Performance optimization directly impacts revenue"
+
+financial_services:
+  - "Audit trails and compliance documentation required"
+  - "Security and privacy are non-negotiable requirements"
+  - "Risk management shapes all architectural decisions"
+
+healthcare:
+  - "Patient privacy and HIPAA compliance paramount"
+  - "Data accuracy affects patient safety"
+  - "Regulatory approval required for significant changes"
+```
+
+### **Team Size Adaptations**
+```yaml
+# Adjust guidance based on team characteristics:
+small_team:
+  - "Everyone wears multiple hats - context switching is normal"
+  - "Direct communication - less formal process overhead"
+  - "Shared responsibility - everyone contributes to all areas"
+
+large_team:
+  - "Specialization important - defer to domain experts"
+  - "Process consistency critical - follow established patterns"
+  - "Communication overhead - document decisions clearly"
+```
+
+Execute the comprehensive AI guidance initialization now.

@@ -1,0 +1,254 @@
+---
+targeting: ["**/*.md", "**/*.mdc"]
+priority: medium
+scope: "documentation_formatting"
+---
+# Documentation Style Standards
+
+## Context
+This rule applies when creating or editing markdown documentation files in any project.
+
+**Alignment with Project Context**: This rule ensures formatting and style support clear communication and navigation between technical documentation, user resources, and internal team knowledge, prioritizing clarity and accessibility for all intended audiences.
+
+## Markdown Formatting Guidelines
+
+### Headers
+- Use consistent header hierarchy (h1 → h2 → h3, no skipping levels)
+- Start each document with a single h1 title
+- Use sentence case for headers (capitalize first word and proper nouns only)
+- Add emoji icons to main section headers for visual hierarchy
+- Example: `## 🎯 Getting Started` instead of `## GETTING STARTED`
+
+### Lists
+- Use `-` for unordered lists consistently
+- Use ordered lists (1., 2., 3.) when sequence matters
+- Indent sublists with 2 spaces
+- Use checkboxes `- [ ]` for actionable items or checklists
+- Use completed checkboxes `- [x]` only for template examples
+
+### Code Blocks
+- Always specify language for syntax highlighting: ```bash, ```sql, ```yaml, ```javascript
+- Use `inline code` for file names, commands, and technical terms
+- Include comments in code examples to explain complex logic
+- Use consistent indentation (2 spaces for YAML, 4 spaces for SQL)
+
+### Links
+- Use descriptive link text instead of "click here" or "read more"
+- Prefer relative links for internal documentation: `[Style Guide](../development/style-guide.md)`
+- Include external link indicators when linking outside the project
+- Group related links in bulleted lists for easy scanning
+
+### Tables
+- Use tables for structured comparison data
+- Include headers for all columns
+- Keep cell content concise and scannable
+- Use consistent alignment (left for text, right for numbers)
+
+### Emphasis
+- Use **bold** for important terms and key concepts
+- Use *italics* for emphasis and placeholders like *[To be filled in]*
+- Use `inline code` for technical terms, file paths, and commands
+- Avoid overuse of emphasis - use sparingly for maximum impact
+
+## Content Structure Standards
+
+### Document Organization
+- Start with clear purpose statement and scope
+- Use consistent section ordering: Overview → Setup → Usage → Examples → Troubleshooting
+- Include table of contents for documents > 500 words
+- End with support/contact information and last updated date
+
+### Writing Style
+- Write in active voice when possible
+- Use second person ("you") for instructional content
+- Use present tense for current state, procedures, and facts
+- Keep sentences concise and focused (under 25 words when possible)
+- Define technical terms on first use or link to glossary
+
+### Cross-References and Navigation
+- Link related concepts and procedures generously
+- Use consistent link text for the same destinations
+- Include "See also" sections for related topics
+- Reference specific sections with descriptive anchor text
+- Implement bidirectional navigation between related documents
+
+## Quality Standards
+
+### Accessibility
+- Use descriptive alt text for images and diagrams
+- Ensure adequate color contrast in any visual elements
+- Structure content with semantic headers for screen readers
+- Provide text alternatives for visual-only information
+
+### Maintainability
+- Include clear ownership and update information
+- Use consistent naming conventions for files and sections
+- Keep examples realistic and up-to-date
+- Include date stamps for time-sensitive information
+
+### User Experience
+- Write for different experience levels (clearly indicate skill requirements)
+- Provide multiple learning paths (quick start vs. comprehensive guide)
+- Include real examples and use cases relevant to the project context
+- Test instructions for completeness and accuracy
+- Design navigation to support both directed tasks and exploratory browsing
+
+## Examples
+
+### Good Header Structure
+```markdown
+# Data Pipeline Setup Guide
+
+## 🚀 Quick Start
+### Prerequisites
+### Installation Steps
+
+## 🔧 Configuration
+### Environment Setup
+### Database Connections
+
+## 📋 Troubleshooting
+### Common Issues
+### Getting Help
+```
+
+### Good Link Usage
+```markdown
+Follow our [Git Workflow Guide](../development/git-workflows.md) to create a feature branch, then review the [Code Review Checklist](../development/code-review-checklist.md) before submitting your PR.
+```
+
+### Good Code Example
+```markdown
+Install dbt and dependencies:
+```bash
+# Install dbt with Snowflake adapter
+pip install dbt-snowflake
+
+# Verify installation
+dbt --version
+```
+
+### Good Table Format
+| Priority | Response Time | Example Use Cases |
+|----------|---------------|-------------------|
+| P0 - Critical | < 15 minutes | Data pipeline failure, revenue reporting |
+| P1 - High | < 1 hour | Dashboard outage, executive metrics |
+| P2 - Medium | < 4 hours | Non-critical features, documentation |
+```
+
+## Documentation Management and Navigation
+
+### Documentation Purpose and Scope
+- **Primary Function**: Clear communication and navigation between related content
+- **Content Focus**: Match depth to purpose - overviews vs. detailed guides vs. reference material
+- **Audience Awareness**: Write for the intended user type (internal team vs. external users)
+- **Conciseness**: Keep content focused and avoid duplication across documents
+
+### Navigation Patterns
+- **Direct Content Links**: Link to `README.md` files for content navigation
+  - `[API Documentation](./api/README.md)` - Goes to actual content
+- **Browse/Explore Links**: Link to folders for directory exploration  
+  - `[Explore API Documentation](./api/)` - Browse folder contents
+- **Consistent Structure**: Use semantic link patterns across all documentation files
+
+### Navigation Components
+- **Hierarchical Navigation**: Clear back/up/related link patterns
+  - `← Back to [Parent](../README.md)` - Return to parent content
+  - `↑ Browse [All Documentation](../../README.md#navigation)` - Jump to main hub
+  - `→ Related: [Sibling](../sibling/README.md)` - Cross-reference content
+  - `→ Explore: [Parent Folder](../)` - Browse directory
+
+### Content Organization
+- **Overview Section**: Brief purpose and scope (2-3 sentences max)
+- **Quick Navigation**: Primary user paths prominently featured
+- **Visual Hierarchy**: Use emojis and formatting for scannable sections
+- **Avoid Duplication**: Link to detailed docs rather than repeating content
+
+### Maintenance Requirements
+- **Update Triggers**: Documentation must be updated when:
+  - Adding/removing files or directories
+  - Changing project structure or navigation
+  - Modifying primary user workflows
+  - Adding new features or capabilities
+- **Consistency Checks**: Ensure navigation links work and point to existing content
+- **Content Freshness**: Review and update outdated information regularly
+
+### Common Documentation Patterns and Templates
+
+#### **Main Project README**
+```markdown
+# Project Name
+
+Brief project description and value proposition.
+
+## 📚 Documentation Navigation
+
+### 🤝 **For [Primary Users]**
+- **[Main Resource Hub](./main-area/README.md)** - Primary user entry point
+  - **[Specific Tool](./main-area/tool/README.md)** - Specific functionality
+  - **[User Guides](./main-area/guides/README.md)** - Step-by-step tutorials
+
+### 🏗️ **For [Secondary Users]**  
+- **[Internal Documentation](./internal/README.md)** - Internal team resources
+
+### 🛠️ **Development Resources**
+- **[Development Setup](./.dev/README.md)** - Development environment
+```
+
+#### **Directory Hub README**
+```markdown
+# Directory Purpose
+
+Brief description of this directory's role and contents.
+
+## 📁 Directory Structure
+
+### [`subdirectory/`](./subdirectory/README.md)
+Brief description of subdirectory contents and purpose.
+
+## 🧭 Navigation
+
+- **← Back to [Parent](../README.md)**
+- **↑ Browse [All Documentation](../../README.md#navigation)**
+- **→ Explore [Related Areas](../related/)** 
+```
+
+#### **Specific Tool/Feature Documentation**
+```markdown
+# Tool/Feature Name
+
+Brief description and primary use case.
+
+## 🚀 Quick Start
+
+Essential getting started information (3-5 steps max).
+
+## 📋 Key Features
+
+- **Feature 1** - Brief description
+- **Feature 2** - Brief description
+
+## 🧭 Navigation
+
+- **← Back to [Parent Hub](../README.md)**
+- **→ Related**: [Tool A](../tool-a/README.md) | [Tool B](../tool-b/README.md)
+```
+
+### Visual Enhancement Guidelines
+- **Diagrams**: Include simple ASCII diagrams or mermaid for complex structures
+- **Emojis**: Use consistently for section headers and navigation (🚀🔧📋🧭)
+- **Tables**: Use for structured comparisons or feature matrices
+- **Code Blocks**: Include when showing file structure or quick commands
+
+### Anti-Patterns to Avoid
+- **Wall of Text**: Long paragraphs without visual breaks
+- **Broken Links**: Navigation pointing to non-existent files
+- **Duplicate Content**: Repeating detailed information from other docs
+- **Inconsistent Navigation**: Different link patterns across documentation files
+- **Outdated Information**: Stale links, obsolete instructions, or incorrect structure
+- **Missing Context**: Documentation files without clear purpose or navigation
+
+## Cross-References
+- [Content Structure Standards](./content-structure.mdc)
+- [Accessibility Standards](./accessibility-standards.mdc)
+- [Team Documentation Standards](../../standards/README.md)

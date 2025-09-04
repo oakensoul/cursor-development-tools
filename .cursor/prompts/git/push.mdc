@@ -1,0 +1,154 @@
+---
+name: "push"
+description: "Smart push execution with workflow intelligence"
+author: "@oakensoul"
+tags: ["git", "push", "documentation", "declarative"]
+context_files: ["../workflow-rules.yml", "../ai-guidance.llms"]
+---
+
+# Smart Push Executor
+
+Execute git push with intelligent workflow decisions based on change analysis.
+
+## Command Format
+- `@push` - Smart push based on context analysis
+- `@push main` - Force push to main (with safety checks)
+- `@push --pr` - Push branch and create PR
+- `@push --sync` - Sync with remote first, then push
+
+## Decision Matrix
+
+### Direct to Main (Safe)
+**Criteria**: 
+- Small documentation changes
+- Typo fixes, contact updates
+- Single file modifications
+- Low collaboration risk
+
+**Action**:
+```bash
+git push origin main
+```
+
+### Feature Branch + PR (Collaborative)
+**Criteria**:
+- New major content
+- Multi-file changes
+- Structural modifications
+- Business context updates
+
+**Action**:
+```bash
+git push -u origin feature-branch-name
+# Then suggest: @pr to create pull request
+```
+
+### Sync Required (Safety)
+**Criteria**:
+- Remote has newer commits
+- Potential conflicts detected
+- Collaborative branch
+
+**Action**:
+```bash
+git fetch origin
+git rebase origin/main  # or appropriate base
+git push origin current-branch
+```
+
+## Execution Protocol
+
+1. **Pre-Push Analysis**:
+   - Check remote status
+   - Analyze commit history
+   - Assess change scope and risk
+   - Determine appropriate strategy
+
+2. **Safety Validations**:
+   - Ensure no uncommitted changes
+   - Check for potential conflicts
+   - Validate commit message format
+   - Verify branch tracking
+
+3. **Execute Push**:
+   - Apply determined strategy
+   - Set upstream tracking if needed
+   - Handle any errors gracefully
+   - Report status and next steps
+
+## Output Formats
+
+### Successful Direct Push
+```
+✅ PUSHED: 3 commits to main
+📝 Latest: docs(team): update meeting cadence and responsibilities  
+🎯 Strategy: Direct push (documentation updates)
+✅ Status: Live and available to team
+```
+
+### Branch Push + PR Suggestion
+```
+✅ PUSHED: feature/onboarding-improvements to remote
+📝 Commits: 5 commits with new setup guide and troubleshooting
+🎯 Strategy: Feature branch (substantial changes detected)
+📋 Next: Use '@pr' to create pull request for team review
+👥 Suggested Reviewers: manager, recent_new_hire
+```
+
+### Sync Required
+```
+⚠️  SYNC NEEDED: Remote has 2 new commits
+📋 Action: Syncing with origin/main first
+✅ SYNCED: Rebased 3 local commits onto latest main
+✅ PUSHED: All changes now live
+📝 Resolution: No conflicts, clean integration
+```
+
+### Error Handling
+```
+❌ PUSH FAILED: Merge conflicts detected
+🚫 Issue: Remote changes conflict with local commits
+🔧 Resolution: Use '@git-workflow resolve' to fix conflicts
+📋 Conflicts: 2 files need manual resolution
+```
+
+## Context Integration
+
+### Change Analysis
+- Read project-context.yml for push strategies
+- Apply team standards for direct vs. PR workflows
+- Consider collaboration requirements from context.llms
+
+### Safety Considerations
+- Documentation changes are generally low-risk
+- Focus on team coordination over technical validation
+- Prioritize clarity and discoverability
+
+## Examples
+
+### Simple Documentation Update
+```bash
+# Scenario: Fixed typos in architecture docs
+# Analysis: Single file, minor change, low risk
+# Decision: Direct to main
+# Execute: git push origin main
+# Output: ✅ PUSHED: docs(architecture): fix typos in Snowflake section
+```
+
+### New Feature Documentation
+```bash
+# Scenario: Added new stakeholder onboarding guide
+# Analysis: New file, substantial content, needs review
+# Decision: Feature branch workflow
+# Execute: git push -u origin docs/stakeholder-onboarding
+# Output: ✅ PUSHED + suggestion to create PR
+```
+
+### Collaborative Update
+```bash
+# Scenario: Working on shared team documentation
+# Analysis: Shared branch, coordination needed
+# Decision: Sync first, then push
+# Execute: git fetch && git rebase && git push
+# Output: ✅ SYNCED and PUSHED with clean integration
+```

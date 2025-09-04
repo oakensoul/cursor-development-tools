@@ -1,0 +1,324 @@
+---
+name: "init-workflow-rules"
+description: "Initialize workflow-rules.yml for new projects"
+author: "@oakensoul"
+tags: ["config", "initialization", "workflow-rules", "setup"]
+---
+
+# Workflow Rules Initializer
+
+Create a comprehensive `workflow-rules.yml` file for a new project or completely refresh an existing one.
+
+## 🎯 **Purpose**
+
+Generate a complete workflow-rules.yml configuration that serves as the single source of truth for:
+- **Project identity** and purpose
+- **Git workflow conventions** (commits, branching, PR rules)
+- **Team structure** and collaboration patterns
+- **Technology stack** and tool configurations
+- **Documentation standards** and content organization
+
+## 📋 **Project Analysis Required**
+
+Before generating workflow-rules.yml, analyze the current project to understand:
+
+### **Git Platform Detection**
+```bash
+# Check git remote URL to determine platform and capabilities
+git remote get-url origin
+# Examples:
+# github.com → platform: "github" (full feature support)
+# gitlab.com → platform: "gitlab" (limited support)
+# bitbucket.org → platform: "bitbucket" (limited support)  
+# dev.azure.com → platform: "azure_devops" (limited support)
+# Other domains → platform: "other" (basic git only)
+```
+
+**Platform Feature Support:**
+- **GitHub**: PR creation (`@pr`), branch protection, full automation
+- **GitLab/Bitbucket/Azure/Other**: Basic git workflows only (`@commit`, `@branch`, `@push`)
+
+### **Project Type Detection**
+```yaml
+# Determine project type from repository contents:
+documentation_repo: README.md, docs/, onboarding/, team/
+data_pipeline: dbt_project.yml, models/, analysis/, macros/
+api_service: main.py, app.py, requirements.txt, Dockerfile
+web_application: package.json, src/, components/, pages/
+infrastructure: terraform/, .tf files, kubernetes/, helm/
+```
+
+### **Technology Stack Discovery**
+```yaml
+# Scan for technology indicators:
+python: requirements.txt, pyproject.toml, *.py files
+javascript: package.json, *.js, *.ts files
+dbt: dbt_project.yml, models/, seeds/, tests/
+docker: Dockerfile, docker-compose.yml
+cloud: terraform/, cloudformation/, .aws/, .gcp/
+database: migrations/, schema/, *.sql files
+```
+
+### **Team Context Assessment**
+```yaml
+# Gather team information:
+team_size: "How many engineers work on this project?"
+experience_levels: "What's the experience distribution (junior/mid/senior)?"
+collaboration_style: "How does the team coordinate work?"
+stakeholder_ecosystem: "Who depends on this project's outputs?"
+```
+
+## 🏗️ **Generation Templates**
+
+### **For Documentation Projects**
+```yaml
+project:
+  name: "{repository-name}"
+  type: "documentation"
+  team: "{team-name}"
+  company: "{company-name}"
+  purpose: "knowledge_management_and_onboarding"
+  target_audience: "new_team_members"
+
+git:
+  platform: "github"  # auto-detected from remote URL
+  remote_url: "{detected-remote-url}"
+  commit_convention:
+    format: "{type}({scope}): {description}"
+    types:
+      docs: "Documentation changes"
+      fix: "Fix broken content or formatting"
+      feat: "New documentation features"
+      update: "Update existing content"
+    scopes:
+      - "onboarding"
+      - "team"
+      - "architecture"
+      - "stakeholders"
+
+  workflows:
+    branching:
+      simple_changes:
+        target: "direct_to_main"
+        examples: ["typo fixes", "contact updates"]
+      substantial_changes:
+        target: "feature_branch"
+        pattern: "docs/{section-name}"
+        examples: ["new sections", "major updates"]
+```
+
+### **For Data Pipeline Projects**
+```yaml
+project:
+  name: "{repository-name}"
+  type: "data_pipeline"
+  team: "data_engineering"
+  company: "{company-name}"
+  purpose: "data_transformation_and_analytics"
+  target_audience: "data_engineers_and_analysts"
+
+git:
+  platform: "github"  # auto-detected from remote URL
+  remote_url: "{detected-remote-url}"
+  commit_convention:
+    format: "{type}({scope}): {description}"
+    types:
+      feat: "New models, macros, or data features"
+      fix: "Fix data quality issues or bugs"
+      refactor: "Restructure models without changing outputs"
+      test: "Add or update data tests"
+    scopes:
+      - "models"
+      - "macros"
+      - "tests"
+      - "seeds"
+      - "docs"
+
+  workflows:
+    branching:
+      all_changes:
+        target: "feature_branch"
+        pattern: "feature/{change-description}"
+        examples: ["new data model", "fix data quality"]
+    
+    pull_requests:
+      required_when: ["all changes"]
+      auto_reviewers:
+        models: ["senior_data_engineer", "analytics_lead"]
+        tests: ["data_engineer", "qa_engineer"]
+```
+
+### **For API/Service Projects**
+```yaml
+project:
+  name: "{repository-name}"
+  type: "api_service"
+  team: "{team-name}"
+  company: "{company-name}"
+  purpose: "service_delivery_and_integration"
+  target_audience: "developers_and_integrators"
+
+git:
+  commit_convention:
+    format: "{type}({scope}): {description}"
+    types:
+      feat: "New features or endpoints"
+      fix: "Bug fixes and error handling"
+      perf: "Performance improvements"
+      refactor: "Code restructuring"
+      test: "Add or update tests"
+      docs: "Documentation updates"
+    scopes:
+      - "api"
+      - "auth"
+      - "database"
+      - "config"
+      - "tests"
+
+  workflows:
+    branching:
+      all_changes:
+        target: "feature_branch"
+        pattern: "feature/{feature-name}"
+    
+    quality_checks:
+      pre_commit:
+        - name: "unit_tests"
+        - name: "linting"
+        - name: "security_scan"
+```
+
+## 📊 **Interactive Configuration**
+
+### **Project Discovery Questions**
+```yaml
+# Ask these questions to gather project context:
+basic_info:
+  - "What type of project is this? (documentation/data-pipeline/api/web-app/other)"
+  - "What's the primary purpose of this repository?"
+  - "Who is the main audience for this project?"
+  - "What company/organization is this for?"
+
+team_context:
+  - "How many engineers work on this project?"
+  - "What's the experience level distribution?"
+  - "How does your team coordinate work? (standups/slack/async)"
+  - "Who are your main stakeholders?"
+
+technology_stack:
+  - "What are your primary technologies? (auto-detected: {detected_tech})"
+  - "What development tools do you use? (AI assistants, IDEs, etc.)"
+  - "What deployment/infrastructure tools are involved?"
+
+workflow_preferences:
+  - "How often do you deploy/release?"
+  - "Do you prefer direct commits or always use PRs?"
+  - "Who typically reviews changes?"
+  - "What branching strategy do you prefer?"
+```
+
+## 🔄 **Output Structure**
+
+### **Complete workflow-rules.yml Template**
+```yaml
+# Generated workflow-rules.yml
+# Auto-generated on: {timestamp}
+# Project type: {detected_type}
+# Configuration source: Interactive setup + repository analysis
+
+project:
+  name: "{project_name}"
+  type: "{project_type}"
+  team: "{team_name}"
+  company: "{company_name}"
+  purpose: "{primary_purpose}"
+  target_audience: "{audience}"
+
+# Git workflow configuration
+git:
+  commit_convention:
+    format: "{type}({scope}): {description}"
+    max_length: 50
+    types:
+      {type_definitions_based_on_project_type}
+    scopes:
+      {scope_definitions_based_on_project_structure}
+
+  workflows:
+    branching:
+      {branching_strategy_based_on_preferences}
+    
+    pull_requests:
+      title_format: "{type}({scope}): {brief_description}"
+      required_when:
+        {pr_requirements_based_on_project_type}
+      
+      auto_reviewers:
+        {reviewer_assignments_based_on_team_structure}
+
+# Quality standards
+quality_checks:
+  pre_commit:
+    {quality_checks_based_on_project_type}
+
+# Documentation standards
+content:
+  style:
+    tone: "professional_helpful"
+    complexity: "progressive"
+    examples: "practical_over_theoretical"
+  
+  organization:
+    {content_organization_based_on_project_type}
+
+# File organization
+file_structure:
+  main_sections:
+    {directory_structure_based_on_project_type}
+
+# Tool-specific configurations
+tools:
+  cursor_ai:
+    rules_directory: ".cursor/rules/"
+    prompts_directory: ".cursor/prompts/"
+    context_aware: true
+  
+  git:
+    default_branch: "main"
+    protected_branches: ["main"]
+    auto_delete_merged_branches: true
+
+# Team-specific context
+team_context:
+  {company_name}:
+    industry: "{industry_context}"
+    data_stack: {detected_tech_stack}
+    stakeholder_teams: {identified_stakeholders}
+  
+  project_goals:
+    primary: "{primary_goal}"
+    secondary: "{secondary_goals}"
+    success_metrics: {success_indicators}
+```
+
+## 🔍 **Validation Checklist**
+
+After generating workflow-rules.yml, verify:
+- [ ] **Project identity accurately reflects** current repository purpose
+- [ ] **Technology stack matches** actual tools and platforms used
+- [ ] **Team structure reflects** real collaboration patterns
+- [ ] **Commit conventions align** with team preferences and industry standards
+- [ ] **Branching strategy fits** project complexity and team size
+- [ ] **Quality checks are appropriate** for project type and risk level
+- [ ] **Stakeholder information is accurate** and current
+
+## 🚀 **Execution Instructions**
+
+1. **Analyze current repository** - scan files, directories, existing configurations
+2. **Detect project type** - documentation, data pipeline, API service, etc.
+3. **Gather team context** - ask interactive questions for missing information
+4. **Generate comprehensive workflow-rules.yml** - using appropriate template and discovered context
+5. **Validate configuration** - ensure accuracy and completeness
+6. **Offer context generation** - suggest running @update-context after creating rules
+
+Execute the complete workflow rules initialization now.

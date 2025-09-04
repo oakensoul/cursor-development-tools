@@ -1,0 +1,358 @@
+---
+name: "shipit"
+description: "Complete end-to-end workflow: stage, commit, branch, push, and PR"
+author: "@oakensoul"
+tags: ["git", "workflow", "automation", "declarative", "shipit"]
+context_files: ["../workflow-rules.yml", "../ai-guidance.llms"]
+---
+
+# Ship It! - Complete Workflow Automation
+
+Execute the complete git workflow from unstaged changes to pull request in one command.
+
+## Command Format
+- `@shipit` - Auto-analyze changes and execute full workflow
+- `@shipit "Custom description"` - Use custom commit/PR description
+- `@shipit --direct` - Force direct push to main (skip PR)
+- `@shipit --draft` - Create draft PR for work in progress
+- `@shipit --update-context` - Force regeneration of LLM context files
+
+## Workflow Intelligence
+
+### Decision Matrix
+```yaml
+On main branch + simple changes → Direct commit and push to main
+On main branch + substantial changes → Create branch, commit, push, PR
+On feature branch → Commit, push, suggest or create PR
+Working directory dirty → Stage all, then proceed with workflow
+```
+
+### Branch Auto-Creation Logic
+When on main and substantial changes detected:
+```yaml
+File analysis → Scope detection → Auto-branch naming
+
+Examples:
+onboarding/*.md → docs/onboarding-improvements
+team/*.md + architecture/*.md → feature/documentation-update
+stakeholders/*.md → docs/stakeholder-information-update
+Multiple sections → feature/multi-section-documentation-update
+```
+
+## Execution Flow
+
+### 1. **Platform Compatibility Check**
+```bash
+# Check if platform supports full shipit workflow
+PLATFORM=$(grep "platform:" .cursor/workflow-rules.yml | cut -d'"' -f2 2>/dev/null || echo "unknown")
+
+if [[ "$PLATFORM" != "github" ]]; then
+    echo "⚠️  PARTIAL SUPPORT: Platform '$PLATFORM' detected"
+    echo ""
+    echo "Available workflow:"
+    echo "  ✅ Stage changes"
+    echo "  ✅ Create commits with AI"
+    echo "  ✅ Push to remote"
+    echo "  ❌ PR creation (use platform's interface)"
+    echo ""
+    read -p "Continue with partial workflow? (y/N): " confirm
+    [[ "$confirm" =~ ^[Yy]$ ]] || exit 0
+fi
+```
+
+### 2. **Situation Analysis**
+```bash
+# Analyze current state
+- Check current branch
+- Identify staged/unstaged changes
+- Assess change scope and complexity
+- Determine appropriate workflow path
+- Check for workflow-rules.yml changes (triggers context update)
+```
+
+### 2. **Context Update Check** (if workflow-rules.yml changed)
+```bash
+# If workflow-rules.yml is modified
+- Offer to regenerate LLM context files
+- Execute @update-context if user agrees
+- Include updated context files in current commit
+```
+
+### 3. **Branch Management** (if needed)
+```bash
+# If on main with substantial changes
+- Generate appropriate branch name from file analysis
+- Create and switch to new branch
+- Report branch creation and rationale
+```
+
+### 4. **Change Staging**
+```bash
+# Stage all relevant changes
+- Add modified files (git add -A)
+- Exclude sensitive or irrelevant files
+- Report what's being staged
+```
+
+### 5. **Smart Commit**
+```bash
+# Generate conventional commit message
+- Analyze files changed for scope detection
+- Create appropriate commit type (docs/fix/feat)
+- Use custom description if provided
+- Execute commit with validation
+```
+
+### 6. **Intelligent Push**
+```bash
+# Push with appropriate strategy
+- Set upstream tracking for new branches
+- Push to remote repository
+- Validate successful push
+```
+
+### 7. **PR Creation** (if appropriate)
+```bash
+# Create PR for substantial changes
+- Auto-generate comprehensive description
+- Assign appropriate reviewers based on content
+- Set labels and metadata
+- Skip for simple direct-to-main changes
+```
+
+## Output Format
+
+### Complete Workflow Success
+```
+🚀 SHIP IT! - Complete Workflow Executed
+
+📋 ANALYSIS:
+   - Current branch: main
+   - Changes: 3 files in onboarding/ section
+   - Assessment: Substantial content updates
+
+🌿 BRANCH CREATED: docs/onboarding-improvements
+   - Rationale: Multi-file onboarding content changes
+   - Base: main (latest: abc1234)
+
+📦 STAGED: 3 files
+   - onboarding/README.md
+   - onboarding/troubleshooting.md
+   - onboarding/setup-guide.md
+
+✅ COMMITTED: docs(onboarding): add comprehensive troubleshooting and setup improvements
+   - Type: Documentation update
+   - Scope: onboarding
+   - Files: 3 modified
+
+🚀 PUSHED: docs/onboarding-improvements
+   - Remote: origin/docs/onboarding-improvements
+   - Tracking: upstream set
+
+📋 PR CREATED: Pull Request #45
+   - Title: docs(onboarding): add comprehensive troubleshooting and setup improvements
+   - URL: https://github.com/oakensoul/cursor-development-tools/pull/45
+   - Reviewers: @manager, @recent-new-hire
+   - Labels: documentation, onboarding
+
+🎉 COMPLETE: Ready for team review!
+```
+
+### Simple Direct Push
+```
+🚀 SHIP IT! - Direct Push Executed
+
+📋 ANALYSIS:
+   - Current branch: main
+   - Changes: 1 file typo fix
+   - Assessment: Simple update, direct push appropriate
+
+📦 STAGED: 1 file
+   - architecture/data-stack.md
+
+✅ COMMITTED: docs(architecture): fix typo in Snowflake configuration section
+   - Type: Documentation fix
+   - Scope: architecture
+
+🚀 PUSHED: main
+   - Status: Live and available to team
+   - No PR needed for simple fix
+
+🎉 COMPLETE: Changes are live!
+```
+
+### Work in Progress
+```
+🚀 SHIP IT! - Draft PR Created
+
+📋 ANALYSIS:
+   - Current branch: feature/team-restructure
+   - Changes: Ongoing collaboration project
+   - Assessment: Work in progress, draft PR appropriate
+
+📦 STAGED: 4 files
+   - team/structure.md
+   - team/meetings.md
+   - team/responsibilities.md
+   - standards/collaboration.md
+
+✅ COMMITTED: docs(team): update structure and collaboration workflows (WIP)
+   - Type: Documentation update  
+   - Scope: team, standards
+
+🚀 PUSHED: feature/team-restructure
+   - Remote: origin/feature/team-restructure
+   - Tracking: upstream set
+
+📝 DRAFT PR CREATED: Pull Request #46
+   - Title: docs(team): update structure and collaboration workflows
+   - URL: https://github.com/oakensoul/cursor-development-tools/pull/46
+   - Status: Draft (mark ready when complete)
+   - Note: Team collaboration project in progress
+
+🎉 COMPLETE: Draft ready for continued collaboration!
+```
+
+## Context Integration
+
+### Change Analysis Patterns
+```yaml
+# From project-context.yml
+file_patterns:
+  single_file_typo: direct_push
+  onboarding_content: branch + PR + manager_review
+  business_context: branch + PR + stakeholder_review
+  technical_architecture: branch + PR + senior_engineer_review
+  multi_section: feature_branch + comprehensive_PR
+```
+
+### Branch Naming Intelligence
+```yaml
+# Auto-generated branch names
+scope_patterns:
+  single_section: "docs/{section}-improvements"
+  multi_section: "feature/documentation-update"
+  specific_fix: "fix/{issue-type}"
+  collaborative: "feature/{project-name}"
+```
+
+### Reviewer Assignment Rules
+```yaml
+# From context files
+content_type_reviewers:
+  onboarding: [manager, recent_new_hire]
+  business_stakeholder: [stakeholder_contact]
+  technical_architecture: [senior_engineer]
+  team_process: [team_lead]
+  cross_functional: [manager, senior_engineer]
+```
+
+## Examples
+
+### Scenario 1: Onboarding Improvements
+```bash
+# Developer working on main, modified multiple onboarding files
+@shipit
+
+# Execution:
+# 1. Analysis: Substantial onboarding changes
+# 2. Branch: Create docs/onboarding-improvements
+# 3. Stage: All modified onboarding files
+# 4. Commit: docs(onboarding): improve setup guide and troubleshooting
+# 5. Push: To new branch with upstream tracking
+# 6. PR: Auto-generated with manager + new hire reviewers
+```
+
+### Scenario 2: Quick Typo Fix
+```bash
+# Developer on main, fixed typo in architecture doc
+@shipit "fix typo in Snowflake section"
+
+# Execution:
+# 1. Analysis: Simple single-file fix
+# 2. Branch: Stay on main (no branch needed)
+# 3. Stage: architecture/data-stack.md
+# 4. Commit: docs(architecture): fix typo in Snowflake section
+# 5. Push: Direct to main
+# 6. PR: Skipped (not needed for simple fix)
+```
+
+### Scenario 3: Ongoing Collaborative Work
+```bash
+# Developer on existing feature branch
+@shipit --draft
+
+# Execution:
+# 1. Analysis: Feature branch with ongoing work
+# 2. Branch: Continue on current branch
+# 3. Stage: All current changes
+# 4. Commit: Generated from changes with WIP indicator
+# 5. Push: Update remote branch
+# 6. PR: Create or update draft PR for collaboration
+```
+
+### Scenario 4: Force Direct Push
+```bash
+# Developer wants to push substantial changes directly
+@shipit --direct "urgent stakeholder contact updates"
+
+# Execution:
+# 1. Analysis: Override normal PR workflow
+# 2. Branch: Stay on main
+# 3. Stage: All changes
+# 4. Commit: docs(stakeholders): urgent stakeholder contact updates
+# 5. Push: Direct to main (despite substantial changes)
+# 6. PR: Skipped (forced direct push)
+```
+
+## Error Handling
+
+### Merge Conflicts
+```
+❌ SHIP IT FAILED: Merge conflicts detected
+🚫 Issue: Remote has conflicting changes
+🔧 Resolution: 
+   1. Use '@git-workflow resolve' to fix conflicts
+   2. Then retry '@shipit' to complete workflow
+📋 Conflicts: 2 files need manual resolution
+```
+
+### No Changes to Ship
+```
+❌ SHIP IT FAILED: No changes detected
+🚫 Issue: Working directory is clean
+💡 Suggestion: Make changes first, then use @shipit
+📋 Status: All files committed and up to date
+```
+
+### Branch Creation Failure
+```
+❌ SHIP IT PARTIAL: Branch creation failed
+🚫 Issue: Branch 'docs/onboarding-improvements' already exists
+🔧 Recovery: Continuing on existing branch
+✅ CONTINUED: Staging and committing to existing branch
+📋 Note: Use different branch name or delete existing branch if needed
+```
+
+## Integration with Other Commands
+
+### Relationship to Other Commands
+- **@shipit** = **@branch** (if needed) + **@commit** + **@push** + **@pr** (if appropriate)
+- **Intelligent orchestration** of all individual commands
+- **Context-driven decisions** at each step
+- **Comprehensive reporting** of entire workflow
+
+### When to Use @shipit vs Individual Commands
+```yaml
+Use @shipit when:
+  - You want complete automation
+  - You trust the context-driven decisions
+  - You want end-to-end workflow execution
+  - You're working on straightforward changes
+
+Use individual commands when:
+  - You want control over each step
+  - You need custom branch names or reviewers
+  - You're doing complex or experimental work
+  - You want to validate each step manually
+```

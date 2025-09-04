@@ -1,0 +1,305 @@
+---
+name: "update-ai-guidance"
+description: "Update existing ai-guidance.llms with new insights and context"
+author: "@oakensoul"
+tags: ["config", "update", "ai-guidance", "enhancement"]
+context_files: ["../../workflow-rules.yml", "../../ai-guidance.llms"]
+---
+
+# AI Guidance Updater
+
+Update existing `ai-guidance.llms` file with new team insights, evolved processes, or enhanced understanding.
+
+## 🎯 **Purpose**
+
+Intelligently update ai-guidance.llms to reflect:
+- **Team evolution** - new members, changed dynamics, evolved culture
+- **Process learnings** - what works, what doesn't, refined approaches
+- **Business context changes** - new stakeholders, shifted priorities, market changes
+- **Technical evolution** - new tools, architecture changes, performance insights
+- **Organizational wisdom** - accumulated knowledge, best practices, lessons learned
+
+## 📋 **Update Triggers**
+
+### **When to Update AI Guidance**
+```yaml
+team_changes:
+  - "New team members bring different perspectives"
+  - "Team culture evolution requires guidance updates"
+  - "Communication patterns shift with team growth"
+  - "Collaboration preferences change over time"
+
+process_evolution:
+  - "Workflow pain points identified and addressed"
+  - "New edge cases discovered and handled"
+  - "Quality standards refined through experience"
+  - "Stakeholder feedback changes approaches"
+
+business_context_shifts:
+  - "New stakeholder priorities or requirements"
+  - "Industry changes affecting technical decisions"
+  - "Competitive pressures changing success metrics"
+  - "Organizational restructuring affecting collaboration"
+
+technical_insights:
+  - "Performance optimization lessons learned"
+  - "Integration challenges and solutions discovered"
+  - "Tool effectiveness insights gained"
+  - "Architecture decisions proven right or wrong"
+```
+
+## 🔄 **Update Categories**
+
+### **Team Wisdom Enhancement**
+```markdown
+# Adding accumulated team knowledge:
+decision_patterns:
+  - "We've learned that X approach works better for Y scenarios"
+  - "When Z happens, our team prefers to handle it by..."
+  - "Communication style A works better with stakeholder group B"
+
+process_refinements:
+  - "The formal process says X, but we've found Y works better because..."
+  - "In edge case A, we bypass normal process B for reason C"
+  - "Quality standard X needs interpretation Y in context Z"
+
+stakeholder_insights:
+  - "Product team actually needs Y instead of X we originally thought"
+  - "Finance team responds better to Z format than Y format"
+  - "Engineering team prefers A communication style over B"
+```
+
+### **Business Context Evolution**
+```markdown
+# Updating business understanding:
+market_changes:
+  - "Industry regulation X now affects our decisions"
+  - "Competitive pressure Y requires us to prioritize Z"
+  - "Customer expectations have shifted from A to B"
+
+stakeholder_evolution:
+  - "New stakeholder team X has different needs than expected"
+  - "Existing team Y has evolved to prioritize Z over A"
+  - "Cross-functional relationship A has improved through approach B"
+
+success_metrics_updates:
+  - "We've learned that metric X better indicates success than Y"
+  - "Stakeholder satisfaction improved when we focused on A vs B"
+  - "Business impact is better measured by X than Y"
+```
+
+### **Technical Context Refinement**
+```markdown
+# Enhanced technical understanding:
+architecture_learnings:
+  - "Approach X scales better than Y for our use case"
+  - "Integration pattern A causes fewer issues than B"
+  - "Performance optimization X has Y trade-offs we didn't anticipate"
+
+tool_effectiveness:
+  - "Tool X works well for use case Y but not Z"
+  - "Configuration A of tool B produces better results than C"
+  - "Team productivity increased when we adopted approach X"
+
+quality_insights:
+  - "Test type X catches more real issues than Y"
+  - "Review pattern A improves quality more than B"
+  - "Documentation approach X helps new team members more than Y"
+```
+
+## 📊 **Update Methodology**
+
+### **Context Analysis**
+```yaml
+# Analyze current ai-guidance.llms to understand:
+existing_content:
+  - strengths: "What guidance is working well?"
+  - gaps: "What situations aren't covered?"
+  - outdated: "What information is no longer accurate?"
+  - missing: "What new insights should be added?"
+
+team_feedback:
+  - effective_guidance: "Which AI suggestions are most helpful?"
+  - problematic_areas: "Where does AI give poor advice?"
+  - missing_context: "What context would improve AI decisions?"
+  - cultural_misalignment: "Where does guidance conflict with team culture?"
+```
+
+### **Incremental Enhancement**
+```yaml
+# Update approach:
+preserve_working_content: "Keep guidance that serves the team well"
+refine_problematic_areas: "Improve sections that cause confusion"
+add_missing_context: "Fill gaps in decision-making guidance"
+update_outdated_information: "Refresh content that's no longer accurate"
+enhance_examples: "Add concrete scenarios from team experience"
+```
+
+## 🎯 **Update Patterns**
+
+### **Team Growth Updates**
+```markdown
+# Example: Team doubled from 3 to 6 engineers
+previous_guidance: "Direct communication is preferred - everyone knows everyone"
+updated_guidance: "Use async communication for coordination - direct communication for complex technical discussions. Not everyone may have context on every project."
+
+additional_context:
+  - "Meeting overhead increases with team size - be more selective"
+  - "Code review pools can be larger - distribute review load"
+  - "Knowledge sharing becomes more important - document decisions"
+```
+
+### **Process Evolution Updates**
+```markdown
+# Example: Learned that strict PR process slows down simple fixes
+previous_guidance: "All changes require PR review for quality"
+updated_guidance: "Simple fixes (typos, broken links, contact updates) can go direct-to-main. Substantial changes (new content, process updates, structural changes) require PR review."
+
+reasoning_added:
+  - "We learned that review overhead on simple fixes creates frustration"
+  - "Quality issues in simple fixes are rare and easily fixed"
+  - "Team velocity improved with more flexible approach"
+```
+
+### **Stakeholder Insight Updates**
+```markdown
+# Example: Product team needs different information than expected
+previous_guidance: "Product team wants technical implementation details"
+updated_guidance: "Product team wants user impact and business metrics. Technical details should be available but not primary focus."
+
+enhanced_context:
+  - "Product team makes decisions based on user experience impact"
+  - "Technical implementation matters for feasibility assessment"
+  - "Lead time and effort estimation more important than technical approach"
+```
+
+## 🔧 **Smart Update Logic**
+
+### **Consistency Checks**
+```yaml
+# Ensure updates maintain coherence:
+workflow_rules_alignment:
+  - "Does updated guidance conflict with workflow-rules.yml?"
+  - "Are formal rules and informal guidance complementary?"
+  - "Do examples match actual team practices?"
+
+internal_consistency:
+  - "Do different sections of guidance contradict each other?"
+  - "Are examples consistent with stated principles?"
+  - "Does guidance scale across different scenarios?"
+
+team_culture_alignment:
+  - "Does guidance reflect actual team values and preferences?"
+  - "Are communication styles consistent with team culture?"
+  - "Do decision frameworks match how team actually makes choices?"
+```
+
+### **Impact Assessment**
+```yaml
+# Evaluate update effects:
+ai_behavior_changes:
+  - "How will these updates change AI suggestions?"
+  - "Will AI provide more helpful guidance in problem areas?"
+  - "Are there unintended consequences from guidance changes?"
+
+team_workflow_impact:
+  - "Will updated guidance improve team productivity?"
+  - "Does guidance reduce friction points identified by team?"
+  - "Are new team members better supported by updated guidance?"
+```
+
+## 🚀 **Execution Protocol**
+
+### **Update Process**
+1. **Analyze current ai-guidance.llms** - identify strengths, gaps, outdated content
+2. **Gather team insights** - what's working, what's not, what's missing
+3. **Identify specific updates needed** - content additions, modifications, removals
+4. **Validate against workflow-rules.yml** - ensure consistency and complementarity
+5. **Apply updates systematically** - maintain structure and coherence
+6. **Test updated guidance** - verify improved AI behavior and team alignment
+
+### **Update Documentation**
+```yaml
+# Track changes for team awareness:
+update_summary:
+  - date: "When update was made"
+  - trigger: "Why update was needed"
+  - changes: "What was modified"
+  - rationale: "Reasoning behind changes"
+  - impact: "Expected improvement in AI guidance"
+
+follow_up_actions:
+  - "Communicate changes to team"
+  - "Monitor AI behavior for improvements"
+  - "Gather feedback on updated guidance"
+  - "Plan next review cycle"
+```
+
+## 📋 **Common Update Scenarios**
+
+### **New Team Member Integration**
+```bash
+@update-ai-guidance
+# Scenario: Senior engineer with different background joins
+# Updates: Add new expertise area, adjust communication preferences
+# Impact: AI better understands when to leverage new expertise
+```
+
+### **Process Pain Point Resolution**
+```bash
+@update-ai-guidance
+# Scenario: Team identified bottleneck in review process
+# Updates: Refine guidance on when review is needed, who should review
+# Impact: AI suggests more appropriate review strategies
+```
+
+### **Stakeholder Feedback Integration**
+```bash
+@update-ai-guidance
+# Scenario: Product team feedback on communication effectiveness
+# Updates: Adjust stakeholder communication guidance
+# Impact: AI better tailors suggestions for different audiences
+```
+
+### **Technical Architecture Evolution**
+```bash
+@update-ai-guidance
+# Scenario: Migration to new data platform completed
+# Updates: Update technical context, decision frameworks, integration patterns
+# Impact: AI suggestions align with new architecture
+```
+
+## 🔍 **Quality Validation**
+
+### **Update Quality Checks**
+```yaml
+accuracy_validation:
+  - "Does updated content reflect current team reality?"
+  - "Are examples drawn from actual team experiences?"
+  - "Is business context current and relevant?"
+
+completeness_assessment:
+  - "Are all major update areas covered?"
+  - "Do updates address identified pain points?"
+  - "Is guidance comprehensive for common scenarios?"
+
+usability_verification:
+  - "Will updated guidance improve AI decision-making?"
+  - "Is content clear and actionable for AI consumption?"
+  - "Are examples specific enough to be useful?"
+```
+
+### **Team Alignment Verification**
+```yaml
+cultural_fit:
+  - "Does guidance reflect actual team values?"
+  - "Are communication patterns accurate?"
+  - "Do decision frameworks match team preferences?"
+
+practical_effectiveness:
+  - "Will this guidance help new team members?"
+  - "Does guidance reduce common friction points?"
+  - "Are stakeholder interaction patterns accurate?"
+```
+
+Execute the intelligent AI guidance update process now.

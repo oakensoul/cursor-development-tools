@@ -1,0 +1,212 @@
+---
+targeting: ["**/*.md", "**/*.mdc"]
+priority: high
+scope: "business_context_content"
+---
+# Business Context for New Engineers
+
+## Context
+This rule applies when creating or editing business context content that helps new team members understand the organization, stakeholders, and how their work creates business value during their first 30-90 days.
+
+**Alignment with Project Context**: This rule supports our primary goal of "productive_contributor_in_30_days" by focusing on business knowledge that new engineers need for stakeholder interaction and impact understanding, as detailed in business-context.llms.
+
+## New Engineer Business Learning
+
+### What New Engineers Need to Know About Sports Betting and Fantasy
+- Start with basic industry concepts before diving into complexity
+- Explain how our products work from a user perspective first
+- Connect regulatory requirements to daily engineering decisions  
+- Use progressive complexity: Week 1 basics → Month 1 nuanced understanding
+- Focus on "why this matters for your work" over comprehensive industry knowledge
+
+### Organization From a New Team Member Perspective
+- Lead with "what does the organization do?" before "how do we do it?"
+- Connect user experience to data engineering work with concrete examples
+- Explain company goals in terms of engineering impact and contribution
+- Prioritize immediate context over comprehensive company history
+- Include "who you'll work with" and "how your work helps them"
+
+### Business Model Basics for New Engineers
+- Start with "how does the organization create value?" in simple terms
+- Connect financial metrics to data engineering work ("your models power revenue reporting")
+- Explain cost impact of engineering decisions (infrastructure, performance optimization)
+- Focus on immediate relevance over comprehensive financial analysis
+- Include "how to talk about cost/value" when working with business stakeholders
+
+## New Engineer Stakeholder Preparation
+
+### Who You'll Work With and How to Help Them
+- Introduce stakeholders with "what they need from you" focus
+- Explain communication preferences from new engineer perspective ("how to ask questions")
+- Include "what success looks like" for each stakeholder relationship
+- Provide "your first conversation" guidance for each team
+- Focus on building relationships over formal processes
+
+### Learning to Translate Business Needs to Technical Work
+- Start with simple examples: "Product team wants to know X" → "You build Y model"
+- Show common requirement patterns new engineers will encounter
+- Explain how to ask clarifying questions without sounding inexperienced
+- Include "what to do when you don't understand a business requirement"
+- Focus on practical translation skills over comprehensive process documentation
+
+### Communication Skills for New Engineers
+- Teach "how to explain technical work to business people" with concrete examples
+- Include scripts for common conversations: status updates, blockers, timeline questions
+- Show "what not to say" and better alternatives for new engineers
+- Focus on building confidence in stakeholder interactions
+- Provide escalation guidance: "when to ask for help vs. figure it out"
+
+## Data-Business Connection
+
+### Business Logic Documentation
+- Explain the "why" behind every business rule and calculation
+- Include business context for data model design decisions
+- Reference regulatory or compliance drivers for data requirements
+- Explain historical context and evolution of business processes
+- Connect data transformations to business value creation
+
+### Impact and Value Demonstration
+- Show how data engineering work creates business value
+- Include metrics for measuring data platform effectiveness
+- Explain ROI calculations for data initiatives
+- Document success stories and impact examples
+- Connect technical improvements to business outcomes
+
+### Business Continuity and Risk
+- Explain business criticality of different data systems
+- Include business impact assessment for potential outages
+- Document recovery time objectives from business perspective
+- Explain compliance and regulatory risk implications
+- Address data privacy and security from business viewpoint
+
+## Content Quality Standards
+
+### Accuracy and Authenticity
+- Use real organizational examples when possible (with appropriate privacy)
+- Keep organizational charts and contact information current
+- Validate business process descriptions with stakeholders
+- Update market and competitive information regularly
+- Ensure compliance and regulatory information is current
+
+### Accessibility to Technical Audience
+- Explain business concepts without assuming prior business knowledge
+- Define industry jargon and business terminology
+- Provide context for business decisions that affect technical work
+- Include historical background for current state understanding
+- Bridge technical implementation with business rationale
+
+### Actionable Guidance
+- Provide specific steps for stakeholder interaction
+- Include templates and examples for common business scenarios
+- Offer decision-making frameworks for business-technical trade-offs
+- Give clear criteria for escalation and priority decisions
+- Include troubleshooting for common business-technical misalignments
+
+## Specific Content Areas
+
+### Business Process Documentation
+- Map end-to-end business processes to data generation
+- Explain seasonal patterns and business cycles
+- Include compliance and regulatory process requirements
+- Document approval workflows and sign-off processes
+- Connect process changes to data system implications
+
+### Metrics and KPI Definitions
+- Provide comprehensive business context for each metric
+- Explain calculation methodology with business rationale
+- Include historical context and evolution of metrics
+- Reference industry benchmarks and competitive context
+- Connect metrics to business strategy and decision-making
+
+### Stakeholder Persona Development
+- Create detailed profiles of data consumers
+- Include technical literacy levels and tool preferences
+- Document decision-making authority and influence
+- Explain budget and resource allocation processes
+- Include cultural and communication style preferences
+
+### Business Intelligence Requirements
+- Translate business questions into analytical requirements
+- Include reporting cadences and delivery preferences
+- Document data quality requirements from business perspective
+- Explain self-service analytics needs and constraints
+- Address training and support requirements for business users
+
+## Examples
+
+### Good Business Context Integration
+```markdown
+## Customer Lifetime Value (CLV) Calculation
+
+### Business Context
+Customer lifetime value is critical for the organization because:
+- **Marketing Budget Allocation**: Determines how much we can spend to acquire customers
+- **Product Development**: Guides feature prioritization for retention vs. acquisition
+- **Regulatory Compliance**: Required for responsible gaming monitoring and reporting
+- **Investor Reporting**: Key metric for demonstrating business sustainability
+
+### Business Logic
+We calculate CLV over a 12-month window because:
+- Sports seasons create natural engagement cycles
+- Regulatory requirements focus on annual gaming behavior
+- Marketing campaigns are planned on seasonal/annual basis
+- Financial reporting aligns with fiscal year planning
+
+### Stakeholder Usage
+- **Marketing Team**: Uses CLV for customer acquisition cost (CAC) optimization
+- **Product Team**: Prioritizes features that increase CLV for key customer segments  
+- **Finance Team**: Includes CLV projections in revenue forecasting models
+- **Executive Team**: Tracks CLV trends as key business health indicator
+```
+
+### Good Stakeholder Communication Example
+```markdown
+## Marketing Team Data Needs
+
+### Communication Preferences
+- **Meeting Style**: Collaborative data review sessions with visual dashboards
+- **Response Time**: 4-8 hours for campaign performance questions
+- **Technical Depth**: Moderate - comfortable with filters and basic SQL concepts
+- **Delivery Format**: Interactive dashboards with drill-down capability
+
+### Key Business Questions
+1. **Campaign Performance**: "Which acquisition channels deliver highest quality customers?"
+2. **Attribution Analysis**: "How do different touchpoints contribute to conversion?"
+3. **Audience Segmentation**: "What customer characteristics predict long-term value?"
+4. **Competitive Analysis**: "How does our performance compare to industry benchmarks?"
+
+### Success Metrics
+- **Self-Service Adoption**: Marketing team answers 80% of questions independently
+- **Decision Speed**: Data availability reduces campaign optimization cycle from weekly to daily
+- **Business Impact**: Attribution insights improve marketing ROI by 15%
+```
+
+### Good Business Process Mapping
+```markdown
+## New User Registration → Data Pipeline
+
+### Business Process
+1. **User signs up** through web or mobile app
+2. **Identity verification** including age and jurisdiction checks
+3. **Account activation** with initial deposit (optional)
+4. **Welcome series** email and in-app messaging
+5. **First bet placement** or fantasy entry (conversion goal)
+
+### Data Generation Points
+- **Registration Event**: User demographics, acquisition source, device info
+- **Verification Event**: Compliance checks, document validation, risk scoring
+- **Deposit Event**: Payment method, transaction amount, bonus eligibility
+- **Engagement Events**: Email opens, app sessions, feature usage
+- **Conversion Event**: First bet details, amount, sport, outcome
+
+### Business Impact
+- **Regulatory Requirement**: Identity verification data required for licensing
+- **Marketing Attribution**: Registration source determines campaign effectiveness measurement
+- **Product Optimization**: Registration funnel analysis drives UX improvements
+- **Risk Management**: Early behavioral patterns feed fraud detection models
+```
+
+## Cross-References
+- [Onboarding Content Standards](./onboarding-content.mdc)
+- [Stakeholder Documentation](../../stakeholders/README.md)
+- [Business Context Guide](../../business/README.md)

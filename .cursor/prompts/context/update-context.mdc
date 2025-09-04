@@ -1,0 +1,113 @@
+---
+name: "update-context"
+description: "Regenerate all LLM context files from workflow-rules.yml"
+author: "@oakensoul"
+tags: ["context", "llm", "automation", "maintenance"]
+context_files: ["../../workflow-rules.yml"]
+---
+
+# LLM Context Generator - Complete Update
+
+Regenerate ALL LLM context files in `.cursor/llms/` from the current `workflow-rules.yml` configuration.
+
+## 🎯 **Generation Process**
+
+### **1. Read Source Configuration**
+- Load `workflow-rules.yml` - extract ALL project, business, team, and technical context
+- Identify project type, team structure, stakeholder ecosystem, technology stack
+- Understand business goals, success metrics, and collaboration patterns
+
+### **2. Generate Context Files**
+Create/update these files in `.cursor/llms/`:
+
+#### **`project-overview.llms`**
+- **Project identity**: name, type, team, company, purpose
+- **Target audience**: who uses this and why
+- **Repository structure**: key directories and their purposes
+- **Content philosophy**: how documentation is organized and maintained
+- **Usage patterns**: how team members interact with this repository
+
+#### **`business-context.llms`**
+- **Company overview**: industry, focus, data strategy
+- **Stakeholder ecosystem**: who depends on our work, communication patterns
+- **Data landscape**: what data matters, how it flows, business impact
+- **Success metrics**: how we measure value and business alignment
+- **Collaboration patterns**: how we work with other teams
+
+#### **`tech-stack.llms`**
+- **Data platforms**: warehouse, transformation, BI tools
+- **Development tools**: version control, AI assistants, collaboration platforms
+- **Operational tools**: orchestration, monitoring, incident response
+- **Integration patterns**: how systems connect and data flows
+- **Standards**: coding conventions, review processes, deployment patterns
+
+#### **`team-context.llms`**
+- **Team structure**: size, roles, experience levels
+- **Processes**: meetings, planning, review cycles
+- **Communication**: channels, escalation, documentation
+- **On-call**: rotation, incident response, support patterns
+- **Growth**: onboarding, learning, career development
+
+### **3. Content Requirements**
+
+#### **LLM-Optimized Writing**
+- **Natural language** - write for AI consumption, not human documentation
+- **Structured sections** - clear headers, consistent formatting
+- **Concrete examples** - specific scenarios over abstract descriptions
+- **Business context** - connect technical decisions to business impact
+- **Action guidance** - help AI make better suggestions and decisions
+
+#### **Information Density**
+- **Comprehensive** - include all relevant context from workflow-rules.yml
+- **Practical** - focus on information that helps AI make better decisions
+- **Current** - reflect actual current state, not aspirational goals
+- **Validated** - cross-check with existing documentation for accuracy
+
+#### **Consistency Standards**
+- **Voice**: Professional, helpful, action-oriented
+- **Structure**: Predictable section organization across all files
+- **Cross-references**: Link related concepts between files
+- **Examples**: Draw from real project scenarios and team experiences
+
+## 🔍 **Validation Checklist**
+
+After generating all files, verify:
+- [ ] **Accuracy**: All information matches current workflow-rules.yml
+- [ ] **Purpose Alignment**: Content serves the project purpose and target audience defined in workflow-rules.yml
+- [ ] **Completeness**: No major project aspects missing from context
+- [ ] **Consistency**: Terminology and references align across all files
+- [ ] **Business alignment**: Content serves actual stakeholder needs
+- [ ] **Technical accuracy**: Stack info, tools, processes are correct
+- [ ] **Team validation**: Information reflects real team structure and processes
+
+## 📋 **Output Format**
+
+### **File Headers**
+Each generated file should start with:
+```markdown
+# [File Purpose]: [Project Name]
+
+## Auto-Generated Context
+**Source**: workflow-rules.yml
+**Generated**: [timestamp]
+**Purpose**: [specific purpose of this context file]
+
+[Main content follows...]
+```
+
+### **Section Structure**
+Use consistent section organization:
+1. **Overview** - high-level context and purpose
+2. **Key Information** - core facts and data
+3. **Relationships** - how this connects to other aspects
+4. **Guidance** - how AI should use this information
+5. **Examples** - concrete scenarios and applications
+
+## 🚀 **Execution**
+
+1. **Read workflow-rules.yml** - extract all relevant configuration
+2. **Generate all 4 context files** - project-overview, business-context, tech-stack, team-context
+3. **Validate consistency** - ensure cross-references work and information aligns
+4. **Report completion** - summarize what was generated and any issues found
+
+Execute the complete context regeneration now.

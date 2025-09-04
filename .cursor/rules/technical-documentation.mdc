@@ -1,0 +1,275 @@
+---
+targeting: ["**/architecture/**/*.md", "**/development/**/*.md", "**/operations/**/*.md"]
+priority: high
+scope: "technical_content"
+---
+# Technical Documentation with Learning Progression
+
+## Context
+This rule applies when creating or editing technical documentation that serves new team members in their learning journey, from Week 1 basics through Month 1+ advanced concepts.
+
+**Alignment with Project Context**: This rule implements the learning progression defined in our onboarding timeline (workflow-rules.yml) and supports the technical context provided in tech-stack.llms, ensuring content matches new engineer needs at each stage.
+
+## Learning Progression Framework
+
+### Week 1: Basic Concepts and Getting Started
+- **Focus**: "What is this?" and "How do I access it?"
+- **Complexity**: Essential concepts only, step-by-step instructions
+- **Examples**: Login procedures, basic navigation, simple queries
+- **Verification**: "How to know you did it right" checkpoints
+- **Avoid**: Technical architecture details, optimization concerns, edge cases
+
+### Week 2: Hands-On Practice and Simple Tasks  
+- **Focus**: "How do I use this for basic tasks?"
+- **Complexity**: Guided practice with real examples
+- **Examples**: Creating simple dbt models, basic dashboard usage, standard workflows
+- **Verification**: Complete a meaningful task with step-by-step guidance
+- **Avoid**: Complex integrations, performance tuning, advanced features
+
+### Week 3-4: Understanding Connections and Context
+- **Focus**: "How does this connect to other systems?" and "Why do we do it this way?"
+- **Complexity**: System relationships and business context
+- **Examples**: Data lineage, stakeholder impact, quality standards
+- **Verification**: Explain the purpose and impact of technical work
+- **Avoid**: Deep technical details, historical architecture decisions
+
+### Month 1+: Advanced Concepts and Independent Work
+- **Focus**: "How do I optimize this?" and "What are the trade-offs?"
+- **Complexity**: Full technical depth, edge cases, troubleshooting
+- **Examples**: Performance optimization, advanced configurations, incident response
+- **Verification**: Work independently with minimal guidance
+- **Include**: Complete technical specifications, architecture decisions, complex scenarios
+
+## Technical Content Guidelines
+
+### Architecture Documentation with Learning Levels
+- **Week 1**: Start with "what is this system?" and basic purpose
+- **Week 2**: Add "how do I interact with it?" with practical examples  
+- **Week 3-4**: Explain "how does it connect to other systems?" with context
+- **Month 1+**: Include full technical specifications, capacity planning, scaling considerations
+- **Always**: Use visual diagrams appropriate to the complexity level
+
+### Procedure Documentation by Experience Level
+- **Week 1**: Extremely detailed steps with no assumptions, include screenshots
+- **Week 2**: Step-by-step with verification points, explain why each step matters
+- **Week 3-4**: Procedures with context about when/why to use them
+- **Month 1+**: Include rollback procedures, troubleshooting, and edge cases
+- **Always**: Test procedures with someone at the target experience level
+
+### Troubleshooting Documentation by Learning Stage
+- **Week 1**: "Something's wrong - who do I ask?" with clear escalation paths
+- **Week 2**: Common error messages with exact solutions and "what this means"
+- **Week 3-4**: Symptom-based troubleshooting with decision trees
+- **Month 1+**: Complex debugging scenarios, log analysis, monitoring dashboards
+- **Always**: Include "when to escalate vs. when to try fixing it yourself"
+
+## Data Engineering Specific Standards
+
+### dbt Model Documentation for Learning Progression
+- **Week 1**: "What does this model do?" in business terms
+- **Week 2**: "How do I use this model?" with simple examples
+- **Week 3-4**: Business logic explanation and stakeholder use cases
+- **Month 1+**: Technical implementation, performance optimization, limitations
+- **Always**: Include data source information and refresh schedules
+
+### Data Pipeline Documentation
+- Document end-to-end data flow from source to consumption
+- Include error handling and retry logic explanation
+- Explain monitoring and alerting configurations
+- Document data quality checks and validation rules
+- Include capacity and performance characteristics
+
+### Infrastructure Documentation
+- Document environment configurations and differences
+- Include security and access control mechanisms
+- Explain backup and disaster recovery procedures
+- Document scaling and capacity management
+- Include cost optimization considerations
+
+## Code Examples and Snippets
+
+### SQL and dbt Examples
+- Always include complete, runnable examples
+- Add comments explaining complex business logic
+- Include sample input and expected output data
+- Reference related models and dependencies
+- Explain performance optimization choices
+
+### Configuration Examples
+- Provide working configuration files
+- Include comments explaining each configuration option
+- Show both minimal and comprehensive configuration examples
+- Include environment-specific variations
+- Explain security and access considerations
+
+### Command Line Examples
+- Include complete commands with all necessary flags
+- Explain each parameter and option
+- Show expected output and success indicators
+- Include common error scenarios and solutions
+- Reference prerequisite setup requirements
+
+## Quality and Maintenance Standards
+
+### Accuracy and Currency
+- Test all technical procedures regularly
+- Update tool versions and configuration examples
+- Verify all links and references work correctly
+- Include "last tested" dates for complex procedures
+- Review and update quarterly or after system changes
+
+### Completeness
+- Include all necessary context and prerequisites
+- Provide multiple approaches for different scenarios
+- Address both normal operations and edge cases
+- Include performance and security considerations
+- Reference related documentation and resources
+
+### Usability
+- Write for the least experienced team member who might need to use the documentation
+- Include time estimates for complex procedures
+- Provide troubleshooting for common mistakes
+- Use consistent terminology and naming conventions
+- Include quick reference summaries for experienced users
+
+## Specific Technical Areas
+
+### System Monitoring and Alerting
+- Document what each alert means and how to investigate
+- Include runbooks for common alert response scenarios
+- Explain escalation criteria and contact procedures
+- Document system health indicators and thresholds
+- Include historical context for alert frequency and patterns
+
+### Performance Optimization
+- Explain monitoring and measurement approaches
+- Document optimization techniques with before/after examples
+- Include capacity planning and scaling considerations
+- Explain trade-offs between different optimization approaches
+- Reference performance benchmarks and targets
+
+### Security and Compliance
+- Document access control and permission management
+- Explain audit logging and compliance requirements
+- Include security incident response procedures
+- Document data classification and handling requirements
+- Reference regulatory and compliance obligations
+
+### Disaster Recovery and Business Continuity
+- Document backup procedures and validation steps
+- Include recovery time objectives and priorities
+- Explain communication procedures during incidents
+- Document testing and validation procedures
+- Include contact information and escalation procedures
+
+## Examples
+
+### Good Architecture Documentation
+```markdown
+## Snowflake Warehouse Configuration
+
+### Purpose
+We use separate warehouses to isolate workloads and manage costs:
+
+- **ANALYTICS_WH**: Production dashboard queries and reporting
+- **DEV_WH**: Development work and testing
+- **LOADING_WH**: Data ingestion and ETL processing
+- **ML_WH**: Machine learning model training and inference
+
+### Configuration Rationale
+```sql
+-- Production analytics warehouse
+CREATE WAREHOUSE ANALYTICS_WH 
+  WAREHOUSE_SIZE = LARGE          -- Handles concurrent dashboard users
+  AUTO_SUSPEND = 300              -- 5-minute auto-suspend for cost control
+  AUTO_RESUME = TRUE              -- Seamless user experience
+  MIN_CLUSTER_COUNT = 1           -- Start with single cluster
+  MAX_CLUSTER_COUNT = 3;          -- Scale to 3 clusters during peak usage
+```
+
+### Monitoring and Optimization
+- **Query Performance**: Monitor via Snowflake query history dashboard
+- **Cost Tracking**: Weekly warehouse usage review in #data-engineering
+- **Scaling Triggers**: Auto-scaling activates when queue depth > 5 queries
+```
+
+### Good Procedure Documentation
+```markdown
+## Deploying dbt Models to Production
+
+### Prerequisites
+- [ ] All tests passing in development environment
+- [ ] Code review approved by senior team member
+- [ ] Stakeholder sign-off for business logic changes
+- [ ] Staging environment validation completed
+
+### Deployment Steps
+
+1. **Create production deployment branch**
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b deploy/YYYY-MM-DD-feature-name
+   ```
+
+2. **Run full test suite**
+   ```bash
+   dbt build --target prod --full-refresh
+   ```
+   ⏱️ **Expected Duration**: 15-30 minutes for full rebuild
+
+3. **Verify data quality**
+   ```bash
+   dbt test --target prod
+   ```
+   ✅ **Success Criteria**: All tests pass, no warnings
+
+4. **Deploy to production**
+   - Merge deployment branch to main
+   - dbt Cloud automatically triggers production job
+   - Monitor job execution in dbt Cloud
+
+### Rollback Procedure
+If issues are detected:
+1. **Immediate**: Revert last deployment in dbt Cloud
+2. **Communication**: Notify stakeholders via #data-engineering
+3. **Investigation**: Create incident ticket and begin root cause analysis
+```
+
+### Good Troubleshooting Documentation
+```markdown
+## dbt Test Failures: Common Issues and Solutions
+
+### Symptom: "unique test failed" for primary key columns
+
+**Most Likely Cause**: Duplicate records in source data
+
+**Investigation Steps**:
+1. **Check for recent data loads**:
+   ```sql
+   SELECT COUNT(*), MAX(updated_at) 
+   FROM raw.source_table 
+   WHERE DATE(updated_at) >= CURRENT_DATE - 7;
+   ```
+
+2. **Identify duplicate records**:
+   ```sql
+   SELECT primary_key, COUNT(*) as duplicate_count
+   FROM staging.model_name
+   GROUP BY 1
+   HAVING COUNT(*) > 1
+   ORDER BY 2 DESC;
+   ```
+
+**Common Solutions**:
+- **Recent duplicates**: Check upstream ETL for processing errors
+- **Historical duplicates**: Add deduplication logic with ROW_NUMBER()
+- **Business logic issue**: Clarify primary key definition with stakeholders
+
+**Escalation**: If duplicates persist after source investigation, escalate to Data Engineering Manager
+```
+
+## Cross-References
+- [Documentation Style Standards](./documentation-style.mdc)
+- [Onboarding Content Standards](./onboarding-content.mdc)
+- [Business Context Guidelines](./business-context.mdc)

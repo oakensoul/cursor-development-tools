@@ -1,0 +1,226 @@
+---
+targeting: ["**/onboarding/**/*.md", "**/README.md"]
+priority: highest
+scope: "onboarding_content"
+---
+# Onboarding Content Standards
+
+## Context
+This rule applies when creating or editing onboarding documentation for new team members.
+
+**Alignment with Project Context**: This rule aligns with our project purpose of "new_engineer_onboarding_primary" and timeline of "0_to_90_days" as defined in workflow-rules.yml and detailed in our llms context files.
+
+## Content Guidelines
+
+### Essential Basics Focus
+**CRITICAL PRINCIPLE**: This onboarding documentation should focus ONLY on "essential basics" that get new engineers productive quickly. Avoid comprehensive architecture documentation that belongs in team documentation.
+
+#### What Belongs in Onboarding (✅ Keep)
+- **Setup instructions**: How to install, configure, and verify tools work
+- **Basic concepts**: Simple explanations of our 3-layer dbt approach, naming conventions
+- **First contribution patterns**: How to create your first model following our style
+- **Getting help**: Where to ask questions and find support
+- **Essential workflows**: Basic git, dbt commands, code review process
+
+#### What Belongs in Team Documentation (❌ Move Out)
+- **Comprehensive architecture**: 500+ line detailed modeling frameworks
+- **Advanced optimization**: Performance tuning, complex incremental strategies  
+- **Future roadmaps**: Plans that might not materialize or change frequently
+- **Historical context**: Why we chose tools (focus on how to use them)
+- **Deep technical decisions**: Detailed rationale that new engineers don't need immediately
+
+#### The "Brain Melt" Test
+Ask: "Will this help someone make their first contribution, or will it overwhelm them?" If it's the latter, move it to team documentation and provide a simple link reference.
+
+### Onboarding Journey Design
+- Structure content for progressive skill building
+- Provide clear success criteria and checkpoints
+- Include estimated time commitments for each section
+- Design for different learning styles (visual, hands-on, reading)
+- Balance comprehensive coverage with actionable first steps
+
+### Practical Implementation Focus
+- Prioritize working setup over theoretical knowledge
+- Include real commands, file paths, and configurations
+- Provide copy-paste examples that actually work
+- Test all instructions on clean environment setups
+- Include troubleshooting for common setup issues
+
+### Business Context Integration
+- Connect technical tasks to business impact
+- Explain "why" behind tools and processes
+- Include organization-specific examples and use cases
+- Reference real stakeholders and business scenarios
+- Bridge technical implementation with business value
+
+## Content Structure Standards
+
+### Step-by-Step Instructions
+- Number sequential steps clearly
+- Use action-oriented language ("Install", "Configure", "Test")
+- Include verification steps after major setup tasks
+- Provide rollback instructions for complex changes
+- Break complex procedures into digestible chunks
+
+### Checklist Integration
+- Include progress checklists for major sections
+- Use clear success criteria for each checkbox
+- Make checklists actionable and specific
+- Provide links to detailed instructions from checklist items
+- Include both technical and soft skill development
+
+### Real-World Examples
+- Use actual organizational scenarios (with appropriate privacy)
+- Include realistic timeline expectations
+- Show both successful outcomes and common mistakes
+- Provide examples of good first contributions
+- Reference actual team members and stakeholders (with permission)
+
+## Tone and Approach
+
+### Welcoming and Supportive
+- Use encouraging language throughout
+- Acknowledge that learning takes time
+- Emphasize team support and help availability
+- Normalize asking questions and seeking help
+- Celebrate small wins and progress milestones
+
+### Comprehensive but Not Overwhelming
+- Organize content by priority (must-do vs. nice-to-have)
+- Provide "quick start" options alongside comprehensive guides
+- Use progressive disclosure (summary → details → advanced)
+- Include "what to skip if you're short on time" guidance
+- Balance thoroughness with practical time constraints
+
+### Context-Aware Guidance
+- Explain tool choices and alternatives
+- Provide business context for technical decisions
+- Include team culture and communication norms
+- Reference company-wide resources and policies
+- Connect individual tasks to team and company goals
+
+## Quality Standards
+
+### Accuracy and Currency
+- Test all setup instructions regularly
+- Update tool versions and download links
+- Verify access requirements and permissions
+- Keep contact information and team structure current
+- Review and update quarterly or after tool changes
+
+### Completeness
+- Cover end-to-end workflow from day zero to productivity
+- Include both mandatory and optional setup components
+- Provide multiple learning paths for different backgrounds
+- Address both technical and cultural onboarding
+- Include follow-up resources for continued learning
+
+### Measurable Outcomes
+- Define clear success criteria for each phase
+- Include objective ways to verify setup completion
+- Provide self-assessment tools and checkpoints
+- Reference specific deliverables and milestones
+- Connect onboarding tasks to performance expectations
+
+## Specific Content Areas
+
+### Technical Setup Documentation
+- Always include prerequisite system requirements
+- Provide step-by-step installation with verification
+- Include common troubleshooting scenarios
+- Test instructions on multiple operating systems
+- Include security best practices from the start
+
+### Business Context Materials
+- Explain company mission and data team role
+- Include stakeholder mapping and communication preferences
+- Provide real examples of business impact
+- Connect technical work to business outcomes
+- Include compliance and regulatory context
+
+### First Project Guidance
+- Design meaningful but low-risk first contributions
+- Provide mentorship and pair programming opportunities
+- Include code review and feedback processes
+- Set appropriate scope and timeline expectations
+- Celebrate completion and learning achievements
+
+### Ongoing Development Planning
+- Include career development pathways
+- Reference learning resources and training opportunities
+- Provide goal-setting frameworks and templates
+- Connect individual growth to team and business needs
+- Include performance evaluation criteria and processes
+
+## Examples
+
+### Good Instruction Format
+```markdown
+## 3. Configure dbt Profile
+
+1. **Create the profiles directory**
+   ```bash
+   mkdir -p ~/.dbt
+   ```
+
+2. **Create the profiles.yml file**
+   ```bash
+   touch ~/.dbt/profiles.yml
+   ```
+
+3. **Add configuration** (replace YOUR_NAME with your actual name):
+   ```yaml
+   dbt_company_prod:
+     outputs:
+       dev:
+         account: company-name
+         schema: YOUR_FIRSTNAME_LASTNAME  # e.g., JOHN_DOE
+   ```
+
+4. **Test the connection**
+   ```bash
+   dbt debug
+   ```
+   ✅ **Success**: You should see all green checkmarks
+
+🚨 **Troubleshooting**: If you see connection errors, verify your RSA key permissions with `ls -la ~/.ssh/snowflake/`
+```
+
+### Good Business Context Integration
+```markdown
+## Why We Use dbt
+
+In our organization, we use dbt because it enables us to:
+- **Version control our analytics** like software code
+- **Test data quality** before stakeholders see reports  
+- **Document business logic** so anyone can understand calculations
+- **Enable self-service** for business teams to explore data confidently
+
+Your first project will be adding a new metric to our customer dashboard - this helps you learn our stack while delivering immediate business value.
+```
+
+### Good Checklist Design
+```markdown
+## Week 1 Success Checklist
+
+### Technical Setup (Days 1-2)
+- [ ] **GitHub access working**: Can clone and push to repositories
+- [ ] **dbt development environment**: `dbt debug` shows all green checkmarks  
+- [ ] **Snowflake access**: Can query production data with read-only permissions
+- [ ] **First PR submitted**: Added yourself to team documentation
+
+### Business Context (Days 3-4)
+- [ ] **Stakeholder meetings scheduled**: Meetings booked with Product, Marketing, Finance teams
+- [ ] **Company product demo**: Understand what the organization builds and delivers
+- [ ] **Data stack walkthrough**: Can explain how data flows from app to dashboards
+
+### Team Integration (Days 4-5)
+- [ ] **Team mentor assigned**: Regular check-ins scheduled with experienced team member
+- [ ] **First standup attendance**: Participated in daily team coordination
+- [ ] **Slack channels joined**: Active in #data-engineering and relevant business channels
+```
+
+## Cross-References
+- [Documentation Style Standards](./documentation-style.mdc)
+- [Business Context Guidelines](./business-context.mdc)
+- [Technical Documentation Standards](./technical-documentation.mdc)
